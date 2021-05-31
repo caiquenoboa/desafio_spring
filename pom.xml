@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.mercadolivre</groupId>
-	<artifactId>desafioSpring</artifactId>
+	<artifactId>socialMeli</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>desafioSpring</name>
+	<name>socialMeli</name>
 	<description>Este projeto simula um sistema de gerenciamento de comércio online (compradores e vendedores).Li.</description>
 	<properties>
 		<java.version>11</java.version>
@@ -25,13 +25,22 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>2.0.2</version>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>
