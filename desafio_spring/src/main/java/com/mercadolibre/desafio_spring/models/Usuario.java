@@ -4,40 +4,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Usuario {
-    private int id;
-    private String name;
-    private List<VendedorDTO> vendedorDTOList;
+    private int userId;
+    private String userName;
+    private List<VendedorDTO> followed;
 
     public Usuario() {
     }
 
-    public Usuario(int id, String name, List<VendedorDTO> vendedorDTOList) {
-        this.id = id;
-        this.name = name;
-        this.vendedorDTOList = vendedorDTOList;
+    public Usuario(int userId, String userName, List<VendedorDTO> followed) {
+        this.userId = userId;
+        this.userName = userName;
+        this.followed = followed;
     }
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public List<VendedorDTO> getVendedorDTOList() {
-        return vendedorDTOList;
+    public List<VendedorDTO> getFollowed() {
+        return followed;
     }
 
-    public void setVendedorDTOList(List<VendedorDTO> vendedorDTOList) {
-        this.vendedorDTOList = vendedorDTOList;
+    public void setFollowed(List<VendedorDTO> followed) {
+        this.followed = followed;
     }
 }

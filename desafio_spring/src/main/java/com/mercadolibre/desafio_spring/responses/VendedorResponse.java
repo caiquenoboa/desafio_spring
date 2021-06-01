@@ -1,37 +1,37 @@
 package com.mercadolibre.desafio_spring.responses;
 
 public class VendedorResponse {
-    private int id;
-    private String name;
-    private int followersCount;
+    private int userId;
+    private String userName;
+    private int followers_count;
 
-    public VendedorResponse(int id, String name, int followersCount) {
-        this.id = id;
-        this.name = name;
-        this.followersCount = followersCount;
+    public VendedorResponse(int userId, String userName, int followers_count) {
+        this.userId = userId;
+        this.userName = userName;
+        this.followers_count = followers_count;
     }
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public int getFollowersCount() {
-        return followersCount;
+    public int getFollowers_count() {
+        return followers_count;
     }
 
-    public void setFollowersCount(int followersCount) {
-        this.followersCount = followersCount;
+    public void setFollowers_count(int followers_count) {
+        this.followers_count = followers_count;
     }
 }

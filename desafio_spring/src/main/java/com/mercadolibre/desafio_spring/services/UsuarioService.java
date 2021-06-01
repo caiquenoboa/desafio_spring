@@ -24,15 +24,15 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.findById(userId);
         Vendedor vendedor = vendedorRepository.findById(userIdToFollow);
 
-        UsuarioDTO usuarioDTO = new UsuarioDTO((usuario.getId()), usuario.getName());
-        VendedorDTO vendedorDTO = new VendedorDTO((vendedor.getId()), vendedor.getName());
+        UsuarioDTO usuarioDTO = new UsuarioDTO((usuario.getUserId()), usuario.getUserName());
+        VendedorDTO vendedorDTO = new VendedorDTO((vendedor.getUserId()), vendedor.getUserName());
 
-        if(!usuario.getVendedorDTOList().contains(vendedorDTO)){
-            usuario.getVendedorDTOList().add(vendedorDTO);
+        if(!usuario.getFollowed().contains(vendedorDTO)){
+            usuario.getFollowed().add(vendedorDTO);
         }
 
-        if(!vendedor.getUsuarioDTOList().contains(usuarioDTO)){
-            vendedor.getUsuarioDTOList().add(usuarioDTO);
+        if(!vendedor.getFollowers().contains(usuarioDTO)){
+            vendedor.getFollowers().add(usuarioDTO);
         }
 
         usuarioRepository.update(usuario);

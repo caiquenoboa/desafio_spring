@@ -23,7 +23,7 @@ public class UsuarioRepository {
     public Usuario findById(int usuarioId){
         List<Usuario> usuarioList = findAll();
         return usuarioList.stream()
-                .filter(usuario -> usuario.getId() == usuarioId)
+                .filter(usuario -> usuario.getUserId() == usuarioId)
                 .findFirst()
                 .orElseThrow(() -> new UsuarioNotFoundException("Usuario não encontrado"));
     }
@@ -32,7 +32,7 @@ public class UsuarioRepository {
         List<Usuario> usuarioList = findAll();
 
         setAll((usuarioList.stream()
-                .map(usuarioR -> usuario.getId() == usuarioR.getId() ? usuario : usuarioR)
+                .map(usuarioR -> usuario.getUserId() == usuarioR.getUserId() ? usuario : usuarioR)
                 .collect(Collectors.toList())));
     }
 }

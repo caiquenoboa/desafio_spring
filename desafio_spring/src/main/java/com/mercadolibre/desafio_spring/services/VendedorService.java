@@ -19,7 +19,7 @@ public class VendedorService {
 
     public VendedorResponse getFollowersCount(int userId) {
         Vendedor vendedor = vendedorRepository.findById(userId);
-        return new VendedorResponse(vendedor.getId(), vendedor.getName(), vendedor.getUsuarioDTOList().size());
+        return new VendedorResponse(vendedor.getUserId(), vendedor.getUserName(), vendedor.getFollowers().size());
     }
 
     public Vendedor getFoloowersList(int userId) {

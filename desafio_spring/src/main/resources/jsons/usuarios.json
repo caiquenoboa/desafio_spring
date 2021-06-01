@@ -1,1 +1,1 @@
-[{"id":0,"name":"Usuario0","vendedorDTOList":[{"id":1,"name":"Vendedor1"}]},{"id":1,"name":"Usuario1","vendedorDTOList":[]},{"id":2,"name":"Usuario2","vendedorDTOList":[]},{"id":3,"name":"Usuario3","vendedorDTOList":[]}]
+[{"userId":0,"userName":"Usuario0","followed":[]},{"userId":1,"userName":"Usuario1","followed":[{"userId":1,"userName":"Vendedor1"},{"userId":0,"userName":"Vendedor0"},{"userId":0,"userName":"Vendedor0"}]}]

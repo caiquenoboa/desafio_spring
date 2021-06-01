@@ -23,7 +23,7 @@ public class VendedorRepository {
     public Vendedor findById(int vendedorId){
         List<Vendedor> vendedorList = findAll();
         return vendedorList.stream()
-                .filter(vendedor -> vendedor.getId() == vendedorId)
+                .filter(vendedor -> vendedor.getUserId() == vendedorId)
                 .findFirst()
                 .orElseThrow(() -> new VendedorNotFoundException("Vendedor não encontrado"));
     }
@@ -32,7 +32,7 @@ public class VendedorRepository {
         List<Vendedor> vendedorList = findAll();
 
         setAll((vendedorList.stream()
-                .map(vendedorR -> vendedor.getId() == vendedorR.getId() ? vendedor : vendedorR)
+                .map(vendedorR -> vendedor.getUserId() == vendedorR.getUserId() ? vendedor : vendedorR)
                 .collect(Collectors.toList())));
     }
 }

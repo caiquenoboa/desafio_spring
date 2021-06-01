@@ -1,30 +1,30 @@
 package com.mercadolibre.desafio_spring.models;
 
 public class UsuarioDTO {
-    private int id;
-    private String name;
+    private int userId;
+    private String userName;
 
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public UsuarioDTO(int userId, String userName) {
+        this.userId = userId;
+        this.userName = userName;
     }
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }
