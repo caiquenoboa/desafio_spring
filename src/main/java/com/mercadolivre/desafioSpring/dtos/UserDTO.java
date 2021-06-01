@@ -1,6 +1,5 @@
 package com.mercadolivre.desafioSpring.dtos;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -9,8 +8,7 @@ public class UserDTO {
     @NotBlank(message = "Campo obrigatório")
     private String userName;
 
-    @Column(columnDefinition = "boolean default false")
-    @NotNull
+    @NotNull(message = "Campo obrigatório")
     private Boolean seller;
 
     public UserDTO() {
@@ -36,5 +34,4 @@ public class UserDTO {
     public void setSeller(Boolean seller) {
         this.seller = seller;
     }
-
 }

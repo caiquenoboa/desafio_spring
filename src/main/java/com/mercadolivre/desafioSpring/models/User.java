@@ -19,15 +19,15 @@ public class User {
     @NotNull
     private Boolean seller;
 
-    @ManyToMany(cascade={CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name="USER_FOLLOWERS", joinColumns = @JoinColumn(name="USER_ID")
             , inverseJoinColumns = @JoinColumn(name="FOLLOWER_ID"))
     private List<User> followers;
 
-    @ManyToMany(mappedBy = "followers")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "followers")
     private List<User> followed;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Post> posts;
 
     public User() {

@@ -1,18 +1,18 @@
 package com.mercadolivre.desafioSpring.services;
 
+import com.mercadolivre.desafioSpring.dtos.ResponseUserFollowersDTO;
 import com.mercadolivre.desafioSpring.dtos.UserDTO;
-import com.mercadolivre.desafioSpring.models.Post;
+import com.mercadolivre.desafioSpring.exceptions.UserNotFoundException;
 import com.mercadolivre.desafioSpring.models.User;
 import com.mercadolivre.desafioSpring.repositories.UserRepository;
+import com.mercadolivre.desafioSpring.responses.UserResponse;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService{
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -31,17 +31,37 @@ public class UserServiceImpl implements UserService{
                         new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     }
 
-    public Boolean followUser(Integer userId, Integer userIdToFollow) {
+    public void followUser(Integer userId, Integer userIdToFollow) {
         User user = this.findById(userId);
         User userToFollow = this.findById(userIdToFollow);
-        if(user != null && userToFollow != null
-                && !user.getUserId().equals(userToFollow.getUserId())
-                && !user.getFollowers().contains(userToFollow)){
-            user.getFollowers().add(userToFollow);
-            userRepository.save(user);
-            return true;
+
+        if(!isUserValidToFollow(user, userToFollow)) {
+            throw new UserNotFoundException("Usuario " + userId + " nao pode seguir usuario " + userToFollow.getUserId());
         }
-        return false;
+        user.getFollowers().add(userToFollow);
+        userRepository.save(user);
     }
 
+    public Boolean isUserValidToFollow(User user, User userToFollow){
+        return user != null && userToFollow != null
+                && !user.getUserId().equals(userToFollow.getUserId())
+                && !user.getFollowers().contains(userToFollow);
+    }
+
+    public UserResponse getFollowersNumber(Integer userId) {
+        User user = this.findById(userId);
+        if(user != null ) {
+            return new UserResponse(user.getUserId(), user.getUserName(), user.getFollowers().size());
+        }
+        throw new UserNotFoundException("Usuario " + userId + " nao encontrado.");
+    }
+
+    @Override
+    public ResponseUserFollowersDTO getFollowers(Integer userId) {
+        User user = this.findById(userId);
+        if(user != null ) {
+            return new ResponseUserFollowersDTO(200, "", user.getUserId(), user.getUserName(), user.getFollowers());
+        }
+        return new ResponseUserFollowersDTO(404, "Usuario nao encontrado", null, null, null);
+    }
 }
