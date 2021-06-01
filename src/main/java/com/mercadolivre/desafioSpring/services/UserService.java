@@ -7,4 +7,6 @@ import com.mercadolivre.desafioSpring.repositories.UserRepository;
 public interface UserService {
     User createUser(UserDTO userDTO);
     User toModel(UserDTO userDTO);
+
+    Boolean followUser(Integer userId, Integer userIdToFollow);
 }

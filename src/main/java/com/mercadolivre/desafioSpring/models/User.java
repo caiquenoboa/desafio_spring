@@ -15,17 +15,16 @@ public class User {
     @NotBlank(message = "Campo obrigatório")
     private String userName;
 
-    @NotNull(message = "Campo obrigatório")
-    private Boolean isSeller;
+    @Column(columnDefinition = "boolean default false")
+    @NotNull
+    private Boolean seller;
 
-    @ManyToOne(cascade={CascadeType.ALL})
-    @JoinColumn(name="userId")
-    private User user;
-
-    @OneToMany(mappedBy = "userFollowers")
+    @ManyToMany(cascade={CascadeType.ALL})
+    @JoinTable(name="USER_FOLLOWERS", joinColumns = @JoinColumn(name="USER_ID")
+            , inverseJoinColumns = @JoinColumn(name="FOLLOWER_ID"))
     private List<User> followers;
 
-    @OneToMany(mappedBy = "userFollowed")
+    @ManyToMany(mappedBy = "followers")
     private List<User> followed;
 
     @OneToMany(mappedBy = "user")
@@ -34,10 +33,13 @@ public class User {
     public User() {
     }
 
-    public User(Integer userId, String userName, Boolean isSeller) {
+    public User(Integer userId, String userName, Boolean seller, List<User> followers, List<User> followed, List<Post> posts) {
         this.userId = userId;
         this.userName = userName;
-        this.isSeller = isSeller;
+        this.seller = seller;
+        this.followers = followers;
+        this.followed = followed;
+        this.posts = posts;
     }
 
     public Integer getUserId() {
@@ -57,11 +59,11 @@ public class User {
     }
 
     public Boolean getSeller() {
-        return isSeller;
+        return seller;
     }
 
     public void setSeller(Boolean seller) {
-        isSeller = seller;
+        this.seller = seller;
     }
 
     public List<User> getFollowers() {

@@ -1,9 +1,9 @@
 package com.mercadolivre.desafioSpring.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class Post {
@@ -19,11 +19,8 @@ public class Post {
     @NotNull(message = "Campo obrigatório")
     private Date date;
 
-    @Column(nullable = false)
-    @ManyToMany()
-        @JoinTable(name = "POST_PRODUCTS", joinColumns = @JoinColumn(name = "POST_ID"),
-               inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID"))
-    private List<Product> products;
+    @OneToOne
+    private Product product;
 
     @NotNull(message = "Campo obrigatório")
     private Integer category;
@@ -31,15 +28,25 @@ public class Post {
     @NotNull(message = "Campo obrigatório")
     private Double price;
 
+    @NotNull(message = "Campo obrigatório")
+    private Boolean hasPromo;
+
+    @NotNull(message = "Campo obrigatório")
+    @Min(0)
+    private Double discount;
+
     public Post() {
     }
 
-    public Post(Integer postId, User user, Date date, Integer category, Double price) {
+    public Post(Integer postId, User user, Date date, Product product, Integer category, Double price, Boolean hasPromo, Double discount) {
         this.postId = postId;
         this.user = user;
         this.date = date;
+        this.product = product;
         this.category = category;
         this.price = price;
+        this.hasPromo = hasPromo;
+        this.discount = discount;
     }
 
     public Integer getPostId() {
@@ -66,12 +73,12 @@ public class Post {
         this.date = date;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public Integer getCategory() {
@@ -88,6 +95,22 @@ public class Post {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Boolean getHasPromo() {
+        return hasPromo;
+    }
+
+    public void setHasPromo(Boolean hasPromo) {
+        this.hasPromo = hasPromo;
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
     }
 }
 

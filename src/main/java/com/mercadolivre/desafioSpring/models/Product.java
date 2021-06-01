@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 
 @Entity
 public class Product {
@@ -27,10 +26,6 @@ public class Product {
 
     @NotBlank(message = "Campo obrigatório")
     private String notes;
-
-    @JsonIgnore
-    @ManyToMany(mappedBy = "products")
-    private List<Post> posts;
 
     public Product() {
     }
@@ -90,13 +85,5 @@ public class Product {
 
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-
-    public List<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
     }
 }
