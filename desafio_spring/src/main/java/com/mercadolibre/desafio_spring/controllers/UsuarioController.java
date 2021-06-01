@@ -46,4 +46,12 @@ public class UsuarioController {
     public ResponseEntity<Usuario> getFollowedList(@PathVariable int userId){
         return ResponseEntity.ok(usuarioService.getFollowedList(userId));
     }
+
+    //US 0007: Ser capaz de realizar a ação de “Deixar de seguir” (parar de seguir) um
+    //determinado vendedor.
+    @PostMapping("/{userId}/unfollow/{userIdToUnfollow}")
+    public ResponseEntity unfollow(@PathVariable int userId, @PathVariable int userIdToUnfollow){
+        usuarioService.unfollow(userId, userIdToUnfollow);
+        return ResponseEntity.ok().build();
+    }
 }
