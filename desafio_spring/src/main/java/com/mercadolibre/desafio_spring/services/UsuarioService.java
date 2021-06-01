@@ -38,4 +38,8 @@ public class UsuarioService {
         usuarioRepository.update(usuario);
         vendedorRepository.update(vendedor);
     }
+
+    public Usuario getFollowedList(int userId){
+        return usuarioRepository.findById(userId);
+    }
 }
