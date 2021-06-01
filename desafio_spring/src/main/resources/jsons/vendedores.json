@@ -1,1 +1,1 @@
-[{"userId":0,"userName":"Vendedor0","followers":[]},{"userId":1,"userName":"Vendedor1","followers":[{"userId":1,"userName":"Usuario1"}]}]
+[{"userId":0,"userName":"Vendedor0","followers":[{"userId":1,"userName":"Usuario1"},{"userId":0,"userName":"Usuario0"}]},{"userId":1,"userName":"Vendedor1","followers":[{"userId":1,"userName":"Usuario1"}]}]

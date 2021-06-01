@@ -1,11 +1,10 @@
 package com.mercadolibre.desafio_spring.models;
 
-import java.util.Date;
 
 public class Publicacao {
     private int userId;
     private int id_post;
-    private Date date;
+    private String date;
     private Produto detail;
     private int category;
     private double price;
@@ -13,7 +12,7 @@ public class Publicacao {
     public Publicacao() {
     }
 
-    public Publicacao(int userId, int id_post, Date date, Produto detail, int category, double price) {
+    public Publicacao(int userId, int id_post, String date, Produto detail, int category, double price) {
         this.userId = userId;
         this.id_post = id_post;
         this.date = date;
@@ -38,11 +37,11 @@ public class Publicacao {
         this.id_post = id_post;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

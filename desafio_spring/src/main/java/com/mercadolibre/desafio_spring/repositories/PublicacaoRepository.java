@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public class PublicacaoRepository {
-    private List<Publicacao> findAll() {
+    public List<Publicacao> findAll() {
         return Json.read(Publicacao.class, "publicacoes.json");
     }
 

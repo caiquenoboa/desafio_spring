@@ -35,7 +35,7 @@ public class UsuarioService {
 
         List<VendedorDTO> vendedorDTOList = usuario.getFollowed().stream().filter(vendedorDTO1 -> vendedorDTO1.getUserId() != vendedorDTO.getUserId()).collect(Collectors.toList());
         List<UsuarioDTO> usuarioDTOList = vendedor.getFollowers().stream().filter(usuarioDTO1 -> usuarioDTO.getUserId() != usuarioDTO1.getUserId()).collect(Collectors.toList());
-
+        //vendedorDTOList.stream().map(elemento -> elemento.getUserId()).filter(elemento -> elemento == vendedorDTO.getUserId()).findFirst().orElseThrow();
 
         if(lengthUsuario == vendedorDTOList.size()){
             usuario.getFollowed().add(vendedorDTO);
