@@ -1,7 +1,11 @@
 package com.mercadolibre.desafio_spring.models;
 
 
-public class Publicacao {
+import com.mercadolibre.desafio_spring.utils.DateUtil;
+
+import java.util.Date;
+
+public class Publicacao implements Comparable<Publicacao> {
     private int userId;
     private int id_post;
     private String date;
@@ -67,5 +71,12 @@ public class Publicacao {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Override
+    public int compareTo(Publicacao publicacao) {
+        Date thisDate = DateUtil.convertStringToDate(this.getDate());
+        Date publicacaoDate = DateUtil.convertStringToDate(publicacao.getDate());
+        return thisDate.compareTo(publicacaoDate);
     }
 }

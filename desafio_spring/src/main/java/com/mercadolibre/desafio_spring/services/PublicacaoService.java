@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class PublicacaoService {
@@ -26,10 +23,11 @@ public class PublicacaoService {
     }
 
     public void createPublicacao(Publicacao publicacao) {
+        Date date = DateUtil.convertStringToDate(publicacao.getDate());
         publicacaoRepository.add(publicacao);
     }
 
-    public List<Publicacao> getPublicacoesList(int userId) {
+    public List<Publicacao> getPublicacoesList(int userId, Optional<String> order) {
 
         List<Publicacao> publicacaoList = publicacaoRepository.findAll();
 
@@ -45,6 +43,19 @@ public class PublicacaoService {
                     }
                 }
             }
+        }
+
+        if (order.isEmpty()){
+            return publicacaoListFiltered;
+        }
+        else if(order.toString().contains("date_asc")){
+            Collections.sort(publicacaoListFiltered);
+        }
+        else if(order.toString().contains("date_desc")){
+            Collections.sort(publicacaoListFiltered, Collections.reverseOrder());
+        }
+        else{
+            throw new RuntimeException("order deve ser 'name_asc' ou 'name_desc'");
         }
 
         return publicacaoListFiltered;

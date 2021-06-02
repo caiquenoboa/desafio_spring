@@ -85,7 +85,6 @@ public class UsuarioService {
         UsuarioDTO usuarioDTO = new UsuarioDTO((usuario.getUserId()), usuario.getUserName());
         VendedorDTO vendedorDTO = new VendedorDTO((vendedor.getUserId()), vendedor.getUserName());
 
-
         int lengthUsuario = usuario.getFollowed().size();
         int lengthVendedor = vendedor.getFollowers().size();
 

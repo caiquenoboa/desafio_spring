@@ -14,12 +14,7 @@ public class DateUtil {
 
     public static boolean isTheDateInTheLast14Days(String sDate) {
         Calendar dateOfProduct = new GregorianCalendar();
-        Date date = null;
-        try {
-            date = Date.from(LocalDate.parse(sDate, DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT)).atStartOfDay(ZoneId.systemDefault()).toInstant());
-        } catch (Exception e) {
-            throw new RuntimeException("Formato de data não permitida");
-        }
+        Date date = convertStringToDate(sDate);
 
         dateOfProduct.setTime(date);
 
@@ -27,6 +22,16 @@ public class DateUtil {
         twoWeeksAgo.add(Calendar.DATE, -14);
 
         return twoWeeksAgo.before(dateOfProduct);
+    }
+
+    public static Date convertStringToDate(String sDate){
+        Date date = null;
+        try {
+            date = Date.from(LocalDate.parse(sDate, DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT)).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        } catch (Exception e) {
+            throw new RuntimeException("Formato de data não permitida");
+        }
+        return date;
     }
 
 }
