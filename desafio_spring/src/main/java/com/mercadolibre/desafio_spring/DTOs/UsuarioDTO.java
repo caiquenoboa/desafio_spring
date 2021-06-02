@@ -1,15 +1,13 @@
-package com.mercadolibre.desafio_spring.models;
+package com.mercadolibre.desafio_spring.DTOs;
 
-import java.util.Comparator;
-
-public class VendedorDTO implements Comparable<VendedorDTO>{
+public class UsuarioDTO implements Comparable<UsuarioDTO> {
     private int userId;
     private String userName;
 
-    public VendedorDTO() {
+    public UsuarioDTO() {
     }
 
-    public VendedorDTO(int userId, String userName) {
+    public UsuarioDTO(int userId, String userName) {
         this.userId = userId;
         this.userName = userName;
     }
@@ -31,7 +29,7 @@ public class VendedorDTO implements Comparable<VendedorDTO>{
     }
 
     @Override
-    public int compareTo(VendedorDTO vendedorDTO) {
-        return this.getUserName().compareTo(vendedorDTO.getUserName());
+    public int compareTo(UsuarioDTO usuarioDTO){
+        return this.getUserName().compareTo(usuarioDTO.getUserName());
     }
 }

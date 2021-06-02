@@ -1,16 +1,14 @@
 package com.mercadolibre.desafio_spring.services;
 
 import com.mercadolibre.desafio_spring.models.Publicacao;
-import com.mercadolibre.desafio_spring.models.VendedorDTO;
+import com.mercadolibre.desafio_spring.DTOs.VendedorDTO;
 import com.mercadolibre.desafio_spring.repositories.PublicacaoRepository;
 import com.mercadolibre.desafio_spring.repositories.UsuarioRepository;
-import com.mercadolibre.desafio_spring.repositories.VendedorRepository;
 import com.mercadolibre.desafio_spring.utils.DateUtil;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PublicacaoService {
@@ -59,5 +57,13 @@ public class PublicacaoService {
         }
 
         return publicacaoListFiltered;
+    }
+
+    public int getNumeroProdutosPromocionais(int userId) {
+        return publicacaoRepository.findAll().stream().filter(publicacao -> publicacao.getUserId() == userId && publicacao.isHasPromo()).collect(Collectors.toList()).size();
+    }
+
+    public List<Publicacao> getListaPublicacaoPromo(int userId) {
+        return publicacaoRepository.findAll().stream().filter(publicacao -> publicacao.getUserId() == userId && publicacao.isHasPromo()).collect(Collectors.toList());
     }
 }

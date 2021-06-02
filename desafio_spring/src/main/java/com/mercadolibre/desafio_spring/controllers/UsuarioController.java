@@ -1,6 +1,7 @@
 package com.mercadolibre.desafio_spring.controllers;
 
 import com.mercadolibre.desafio_spring.models.Usuario;
+import com.mercadolibre.desafio_spring.responses.VendedorResponse;
 import com.mercadolibre.desafio_spring.services.UsuarioService;
 import com.mercadolibre.desafio_spring.services.VendedorService;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class UsuarioController {
     // US 0002: Obter o resultado do número de usuários que seguem um determinado
     //vendedor
     @GetMapping("/{userId}/followers/count")
-    public ResponseEntity getFollowersCount(@PathVariable int userId){
+    public ResponseEntity<VendedorResponse> getFollowersCount(@PathVariable int userId){
         return ResponseEntity.ok(vendedorService.getFollowersCount(userId));
     }
 

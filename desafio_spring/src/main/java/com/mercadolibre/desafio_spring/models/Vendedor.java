@@ -1,6 +1,7 @@
 package com.mercadolibre.desafio_spring.models;
 
-import java.util.ArrayList;
+import com.mercadolibre.desafio_spring.DTOs.UsuarioDTO;
+
 import java.util.List;
 
 public class Vendedor {

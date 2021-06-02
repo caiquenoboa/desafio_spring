@@ -12,17 +12,21 @@ public class Publicacao implements Comparable<Publicacao> {
     private Produto detail;
     private int category;
     private double price;
+    private boolean hasPromo;
+    private double discount;
 
     public Publicacao() {
     }
 
-    public Publicacao(int userId, int id_post, String date, Produto detail, int category, double price) {
+    public Publicacao(int userId, int id_post, String date, Produto detail, int category, double price, boolean hasPromo, double discount) {
         this.userId = userId;
         this.id_post = id_post;
         this.date = date;
         this.detail = detail;
         this.category = category;
         this.price = price;
+        this.hasPromo = hasPromo;
+        this.discount = discount;
     }
 
     public int getUserId() {
@@ -71,6 +75,22 @@ public class Publicacao implements Comparable<Publicacao> {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public boolean isHasPromo() {
+        return hasPromo;
+    }
+
+    public void setHasPromo(boolean hasPromo) {
+        this.hasPromo = hasPromo;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
     }
 
     @Override

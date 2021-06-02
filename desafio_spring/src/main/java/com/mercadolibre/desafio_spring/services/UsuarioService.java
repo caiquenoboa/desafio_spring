@@ -1,9 +1,9 @@
 package com.mercadolibre.desafio_spring.services;
 
 import com.mercadolibre.desafio_spring.models.Usuario;
-import com.mercadolibre.desafio_spring.models.UsuarioDTO;
+import com.mercadolibre.desafio_spring.DTOs.UsuarioDTO;
 import com.mercadolibre.desafio_spring.models.Vendedor;
-import com.mercadolibre.desafio_spring.models.VendedorDTO;
+import com.mercadolibre.desafio_spring.DTOs.VendedorDTO;
 import com.mercadolibre.desafio_spring.repositories.UsuarioRepository;
 import com.mercadolibre.desafio_spring.repositories.VendedorRepository;
 import org.springframework.stereotype.Service;
@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 @Service
 public class UsuarioService {
 
-    private UsuarioRepository usuarioRepository;
-    private VendedorRepository vendedorRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final VendedorRepository vendedorRepository;
 
 
     public UsuarioService(UsuarioRepository usuarioRepository, VendedorRepository vendedorRepository) {
@@ -35,10 +35,16 @@ public class UsuarioService {
         int lengthUsuario = usuario.getFollowed().size();
         int lengthVendedor = vendedor.getFollowers().size();
 
-        List<VendedorDTO> vendedorDTOList = usuario.getFollowed().stream().filter(vendedorDTO1 -> vendedorDTO1.getUserId() != vendedorDTO.getUserId()).collect(Collectors.toList());
-        List<UsuarioDTO> usuarioDTOList = vendedor.getFollowers().stream().filter(usuarioDTO1 -> usuarioDTO.getUserId() != usuarioDTO1.getUserId()).collect(Collectors.toList());
+        List<VendedorDTO> vendedorDTOList = usuario.getFollowed().stream()
+                                                    .filter(vendedorDTO1 -> vendedorDTO1.getUserId() != vendedorDTO.getUserId())
+                                                    .collect(Collectors.toList());
 
-        if(lengthUsuario == vendedorDTOList.size()){
+
+        //TODO: Colocar em uma classe separada
+        List<UsuarioDTO> usuarioDTOList = vendedor.getFollowers().stream()
+                                                    .filter(usuarioDTO1 -> usuarioDTO.getUserId() != usuarioDTO1.getUserId()).collect(Collectors.toList());
+        boolean aListaFoiAlterada = lengthUsuario == vendedorDTOList.size();
+        if(aListaFoiAlterada){
             usuario.getFollowed().add(vendedorDTO);
         }
         else{

@@ -30,8 +30,31 @@ public class PublicacaoController {
     //publicações recentes primeiro).
     //US0009
     @GetMapping("/followed/{userId}/list")
-    public ResponseEntity getListPublicacoes(@PathVariable int userId, @RequestParam("order") Optional<String> order){
+    public ResponseEntity<List<Publicacao>> getListPublicacoes(@PathVariable int userId, @RequestParam("order") Optional<String> order){
 
         return ResponseEntity.ok(publicacaoService.getPublicacoesList(userId, order));
     }
+
+    //US00010 - Cadastrar uma nova publicação promocional
+    @PostMapping("/newpromopost")
+    public ResponseEntity cadastrarPublicacaoPromocional(@RequestBody Publicacao publicacao) {
+        publicacaoService.createPublicacao(publicacao);
+        return ResponseEntity.ok().build();
+    }
+
+    //US00011 - Obtenha o quantidade de produtos promocionais de um vendedor específico
+    @GetMapping("/{userId}/countPromo")
+    public ResponseEntity<Integer> getNumeroProdutosPromocionais(@PathVariable int userId){
+        return ResponseEntity.ok(publicacaoService.getNumeroProdutosPromocionais(userId));
+    }
+
+    //US00012 - Obter uma lista de todos os produtos promocionais de um vendedor específico
+    @GetMapping("/{userId}/list")
+    public ResponseEntity<List<Publicacao>> getListaPublicacaoPromo(@PathVariable int userId){
+        return ResponseEntity.ok(publicacaoService.getListaPublicacaoPromo(userId));
+    }
+
+
+
+
 }

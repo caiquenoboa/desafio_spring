@@ -1,19 +1,14 @@
 package com.mercadolibre.desafio_spring.services;
 
-import com.mercadolibre.desafio_spring.exceptions.UsuarioNotFoundException;
-import com.mercadolibre.desafio_spring.models.UsuarioDTO;
+import com.mercadolibre.desafio_spring.DTOs.UsuarioDTO;
 import com.mercadolibre.desafio_spring.models.Vendedor;
 import com.mercadolibre.desafio_spring.repositories.VendedorRepository;
 import com.mercadolibre.desafio_spring.responses.VendedorResponse;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class VendedorService {
