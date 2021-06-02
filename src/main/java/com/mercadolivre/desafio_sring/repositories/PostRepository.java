@@ -1,7 +1,6 @@
 package com.mercadolivre.desafio_sring.repositories;
 
 import com.mercadolivre.desafio_sring.models.Post;
-import com.mercadolivre.desafio_sring.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

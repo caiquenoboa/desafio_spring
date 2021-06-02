@@ -1,6 +1,7 @@
 package com.mercadolivre.desafio_sring.services;
 
-import com.mercadolivre.desafio_sring.dtos.userDTOs.*;
+import com.mercadolivre.desafio_sring.dtos.userDTOs.request.UserCreateRequestDTO;
+import com.mercadolivre.desafio_sring.dtos.userDTOs.response.*;
 import com.mercadolivre.desafio_sring.exceptions.GeneralException;
 import com.mercadolivre.desafio_sring.exceptions.ObjectNotFoundException;
 import com.mercadolivre.desafio_sring.models.User;
@@ -8,7 +9,6 @@ import com.mercadolivre.desafio_sring.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,14 +22,20 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public Boolean existsById(Long userId) {
+        return userRepository.existsById(userId);
+    }
+
+    @Override
+    public User findUserById(Long userId) {
+        return userRepository
+                .findById(userId)
+                .orElseThrow(() -> new ObjectNotFoundException("User not a found"));
+    }
+
+    @Override
     public UserCreateResponseDTO createUser(UserCreateRequestDTO userCreateRequestDTO) {
-        User user = userRepository.save(userCreateRequestDTO.toModel());
-
-        UserCreateResponseDTO userCreateResponseDTO = new UserCreateResponseDTO();
-        userCreateResponseDTO.setId(user.getUserId());
-        userCreateResponseDTO.setUserName(user.getUserName());
-
-        return userCreateResponseDTO;
+        return new UserCreateResponseDTO(userRepository.save(userCreateRequestDTO.toModel()));
     }
 
     @Override
@@ -64,8 +70,6 @@ public class UserService implements IUserService {
 
     @Override
     public UserFollowsCountResponseDTO followersCountUser(Long userId) {
-        UserFollowsCountResponseDTO userFollowsCountResponseDTO = new UserFollowsCountResponseDTO();
-
         User user = userRepository
                 .findById(userId)
                 .orElseThrow(() -> new ObjectNotFoundException("User not found"));
@@ -76,69 +80,45 @@ public class UserService implements IUserService {
 
         Long count = userRepository.countByFollowingUserId(user.getUserId());
 
-        userFollowsCountResponseDTO.setUserId(user.getUserId());
-        userFollowsCountResponseDTO.setUserName(user.getUserName());
-        userFollowsCountResponseDTO.setFollowers_count(count);
-
-        return userFollowsCountResponseDTO;
+        return new UserFollowsCountResponseDTO(user.getUserId(), user.getUserName(), count);
     }
 
     @Override
-    public UserFollowersListResponseDTO followersListUser(UserFollowersListRequestDTO userFollowersListRequestDTO) {
-        UserFollowersListResponseDTO userFollowersListResponseDTO = new UserFollowersListResponseDTO();
-
+    public UserFollowersListResponseDTO followersListUser(Long userId) {
         User user = userRepository
-                .findById(userFollowersListRequestDTO.getUserId())
+                .findById(userId)
                 .orElseThrow(() -> new ObjectNotFoundException("User not found"));
 
         if (!user.getIsSeller()) {
             throw new GeneralException("User not is a seller", HttpStatus.BAD_REQUEST.value());
         }
 
-        userFollowersListResponseDTO.setUserId(user.getUserId());
-        userFollowersListResponseDTO.setUserName(user.getUserName());
+        List<UserFollowersListUserResponseDTO> followersDTO = user
+                .getFollowers()
+                .stream()
+                .map(UserFollowersListUserResponseDTO::new)
+                .collect(Collectors.toList());
 
-        List<UserFollowersListUserResponseDTO> followersDTO = new ArrayList<>();
-
-        for (User follower : user.getFollowers()) {
-            UserFollowersListUserResponseDTO followerDTO = new UserFollowersListUserResponseDTO();
-            followerDTO.setUserId(follower.getUserId());
-            followerDTO.setUserName(follower.getUserName());
-            followersDTO.add(followerDTO);
-        }
-
-        userFollowersListResponseDTO.setFollowers(followersDTO);
-
-        return userFollowersListResponseDTO;
+        return new UserFollowersListResponseDTO(user.getUserId(), user.getUserName(), followersDTO);
     }
 
     @Override
-    public UserFollowedListResponseDTO followedListUser(UserFollowedListRequestDTO userFollowedListRequestDTO) {
-        UserFollowedListResponseDTO userFollowedListResponseDTO = new UserFollowedListResponseDTO();
-
+    public UserFollowedListResponseDTO followedListUser(Long userId) {
         User user = userRepository
-                .findById(userFollowedListRequestDTO.getUserId())
+                .findById(userId)
                 .orElseThrow(() -> new ObjectNotFoundException("User not found"));
 
         if (user.getIsSeller()) {
             throw new GeneralException("User is a seller", HttpStatus.BAD_REQUEST.value());
         }
 
-        userFollowedListResponseDTO.setUserId(user.getUserId());
-        userFollowedListResponseDTO.setUserName(user.getUserName());
+        List<UserFollowedListUserResponseDTO> followedDTO = user
+                .getFollowing()
+                .stream()
+                .map(UserFollowedListUserResponseDTO::new)
+                .collect(Collectors.toList());
 
-        List<UserFollowedListUserResponseDTO> followedDTO = new ArrayList<>();
-
-        for (User follower : user.getFollowing()) {
-            UserFollowedListUserResponseDTO followDTO = new UserFollowedListUserResponseDTO();
-            followDTO.setUserId(follower.getUserId());
-            followDTO.setUserName(follower.getUserName());
-            followedDTO.add(followDTO);
-        }
-
-        userFollowedListResponseDTO.setFollowing(followedDTO);
-
-        return userFollowedListResponseDTO;
+        return new UserFollowedListResponseDTO(user.getUserId(), user.getUserName(), followedDTO);
     }
 
     @Override

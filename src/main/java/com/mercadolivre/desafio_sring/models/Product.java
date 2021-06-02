@@ -1,7 +1,5 @@
 package com.mercadolivre.desafio_sring.models;
 
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 

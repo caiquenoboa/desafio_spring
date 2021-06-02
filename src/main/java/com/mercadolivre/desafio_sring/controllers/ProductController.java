@@ -1,13 +1,9 @@
 package com.mercadolivre.desafio_sring.controllers;
 
-import com.mercadolivre.desafio_sring.dtos.postDTOs.PostCreateRequestDTO;
-import com.mercadolivre.desafio_sring.dtos.postDTOs.PostCreateResponseDTO;
-import com.mercadolivre.desafio_sring.dtos.postDTOs.PostGetFollowedPostsRequestDTO;
-import com.mercadolivre.desafio_sring.dtos.postDTOs.PostGetFollowedPostsResponseDTO;
-import com.mercadolivre.desafio_sring.dtos.productDTOs.ProductCreateRequestDTO;
-import com.mercadolivre.desafio_sring.dtos.productDTOs.ProductCreateResponseDTO;
+import com.mercadolivre.desafio_sring.dtos.postDTOs.request.PostCreateRequestDTO;
+import com.mercadolivre.desafio_sring.dtos.postDTOs.response.PostCreateResponseDTO;
+import com.mercadolivre.desafio_sring.dtos.postDTOs.response.PostGetFollowedPostsResponseDTO;
 import com.mercadolivre.desafio_sring.services.PostService;
-import com.mercadolivre.desafio_sring.services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,16 +22,11 @@ public class ProductController {
 
     @PostMapping(value = "/newpost")
     public ResponseEntity<PostCreateResponseDTO> createPost(@RequestBody @Valid PostCreateRequestDTO postCreateRequestDTO) {
-        PostCreateResponseDTO postCreateResponseDTO = postService.createPost(postCreateRequestDTO);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(postCreateResponseDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(postService.createPost(postCreateRequestDTO));
     }
 
     @GetMapping(value = "/followed/{userId}/list")
     public ResponseEntity<PostGetFollowedPostsResponseDTO> getProductsFollowed(@PathVariable Long userId) {
-        PostGetFollowedPostsRequestDTO postGetFollowedPostsRequestDTO = new PostGetFollowedPostsRequestDTO(userId);
-        PostGetFollowedPostsResponseDTO postGetFollowedPostsResponseDTO = postService.getFollowedPosts(postGetFollowedPostsRequestDTO);
-
-        return ResponseEntity.ok(postGetFollowedPostsResponseDTO);
+        return ResponseEntity.ok(postService.getFollowedPosts(userId));
     }
 }
