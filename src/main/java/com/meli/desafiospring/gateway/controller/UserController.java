@@ -16,10 +16,10 @@ public class UserController {
 
     @PostMapping(value = "/users/{userId}/follow/{userIdToFollow}")
     public ResponseEntity<HttpStatus> followUser(@PathVariable(value = "userId") Integer userId,
-                                                   @PathVariable(value = "userIdToFollow") Integer userIdToFollow){
+                                     @PathVariable(value = "userIdToFollow") Integer userIdToFollow){
 
         userService.followUser(userId, userIdToFollow);
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
