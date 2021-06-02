@@ -4,7 +4,7 @@ import com.meli.desafiospring.gateway.request.UserRequest;
 import com.meli.desafiospring.gateway.response.UserResponse;
 import com.meli.desafiospring.service.user.CreateUserService;
 import com.meli.desafiospring.service.user.UserService;
-import com.meli.desafiospring.service.user.followers.GetFollowersCountService;
+import com.meli.desafiospring.service.user.followers.FollowersService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class UserController {
 
     private final UserService userService;
     private final CreateUserService createUserService;
-    private final GetFollowersCountService followersCountService;
+    private final FollowersService followersCountService;
 
     @PostMapping(value = "/")
     public ResponseEntity<HttpStatus> createUser(@RequestBody @Valid UserRequest userRequest){
@@ -39,7 +39,14 @@ public class UserController {
 
     @GetMapping(value = "/{userId}/followers/count/")
     public ResponseEntity<UserResponse> getFollowersCountOfUser(@PathVariable Integer userId){
-        UserResponse userResponse = followersCountService.getFollowersCountOfUser(userId);
+        UserResponse userResponse = followersCountService.getFollowers(userId,true);
+
+        return ResponseEntity.ok(userResponse);
+    }
+
+    @GetMapping(value = "/{userId}/followers/list")
+    public ResponseEntity<UserResponse> getAllFollowerOfUser(@PathVariable Integer userId){
+        UserResponse userResponse = followersCountService.getFollowers(userId, false);
 
         return ResponseEntity.ok(userResponse);
     }
