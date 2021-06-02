@@ -1,92 +1,36 @@
 package com.mercadolivre.desafioSpring.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
     @NotBlank(message = "Campo obrigatório")
     private String userName;
 
-    @Column(columnDefinition = "boolean default false")
-    @NotNull
-    private Boolean seller;
-
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="USER_FOLLOWERS", joinColumns = @JoinColumn(name="USER_ID")
-            , inverseJoinColumns = @JoinColumn(name="FOLLOWER_ID"))
-    private List<User> followers;
+    @JoinTable(name="FOLLOWERS",
+               joinColumns = @JoinColumn(name = "USER_ID"),
+               inverseJoinColumns = @JoinColumn(name = "SELLER_ID"))
+    //@JoinTable(name="SELLER_FOLLOWERS", joinColumns = @JoinColumn(name="USER_ID")
+    //            , inverseJoinColumns = @JoinColumn(name="FOLLOWER_ID"))
+    @JsonIgnore
+    private List<Seller> followed;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "followers")
-    private List<User> followed;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Post> posts;
-
-    public User() {
-    }
-
-    public User(Integer userId, String userName, Boolean seller, List<User> followers, List<User> followed, List<Post> posts) {
-        this.userId = userId;
-        this.userName = userName;
-        this.seller = seller;
-        this.followers = followers;
-        this.followed = followed;
-        this.posts = posts;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public Boolean getSeller() {
-        return seller;
-    }
-
-    public void setSeller(Boolean seller) {
-        this.seller = seller;
-    }
-
-    public List<User> getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(List<User> followers) {
-        this.followers = followers;
-    }
-
-    public List<User> getFollowed() {
-        return followed;
-    }
-
-    public void setFollowed(List<User> followed) {
-        this.followed = followed;
-    }
-
-    public List<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
 }

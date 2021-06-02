@@ -1,67 +1,66 @@
 package com.mercadolivre.desafioSpring.services;
 
-import com.mercadolivre.desafioSpring.dtos.ResponseUserFollowersDTO;
-import com.mercadolivre.desafioSpring.dtos.UserDTO;
 import com.mercadolivre.desafioSpring.exceptions.UserNotFoundException;
+import com.mercadolivre.desafioSpring.models.Seller;
 import com.mercadolivre.desafioSpring.models.User;
 import com.mercadolivre.desafioSpring.repositories.UserRepository;
-import com.mercadolivre.desafioSpring.responses.UserResponse;
+import com.mercadolivre.desafioSpring.requests.UserToCreateRequest;
+import com.mercadolivre.desafioSpring.responses.UserFollowedInfoResponse;
+import com.mercadolivre.desafioSpring.responses.UserInfoResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
+    private final SellerService sellerService;
 
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    public User createUser(UserDTO userDTO) {
-        return userRepository.save(this.toModel(userDTO));
+    public UserInfoResponse createUser(UserToCreateRequest userToCreateRequest) {
+        User user = userRepository.save(this.toModel(userToCreateRequest));
+        return new UserInfoResponse(user.getId(), user.getUserName(), false);
     }
 
     public User findById(Integer userId) {
         return userRepository.findById(userId).orElse(null);
     }
 
-    public User toModel(UserDTO userDTO) {
-        return new User(null, userDTO.getUserName(), userDTO.getSeller(),
-                        new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+    public User toModel(UserToCreateRequest userToCreateRequest) {
+        return new User(null, userToCreateRequest.getUserName(), null);
     }
 
-    public void followUser(Integer userId, Integer userIdToFollow) {
+    public void followSeller(Integer userId, Integer sellerIdToFollow) {
         User user = this.findById(userId);
-        User userToFollow = this.findById(userIdToFollow);
+        Seller sellerToFollow = sellerService.findById(sellerIdToFollow);
 
-        if(!isUserValidToFollow(user, userToFollow)) {
-            throw new UserNotFoundException("Usuario " + userId + " nao pode seguir usuario " + userToFollow.getUserId());
+        if(!isUserValidToFollow(user, sellerToFollow)) {
+            throw new UserNotFoundException("Falha ao usuario " + userId + " seguir o usuario " +
+                    sellerIdToFollow);
         }
-        user.getFollowers().add(userToFollow);
+        user.getFollowed().add(sellerToFollow);
         userRepository.save(user);
     }
 
-    public Boolean isUserValidToFollow(User user, User userToFollow){
-        return user != null && userToFollow != null
-                && !user.getUserId().equals(userToFollow.getUserId())
-                && !user.getFollowers().contains(userToFollow);
-    }
-
-    public UserResponse getFollowersNumber(Integer userId) {
+    public UserFollowedInfoResponse getFollowedInfo(Integer userId) {
         User user = this.findById(userId);
         if(user != null ) {
-            return new UserResponse(user.getUserId(), user.getUserName(), user.getFollowers().size());
+            List<UserInfoResponse> followedInfoResponseList = user.getFollowed().stream()
+                    .map(follower -> new UserInfoResponse(follower.getId(),
+                            follower.getUserName(),
+                            false))
+                    .collect(Collectors.toList());
+            return new UserFollowedInfoResponse(user.getId(), user.getUserName(), followedInfoResponseList);
         }
         throw new UserNotFoundException("Usuario " + userId + " nao encontrado.");
     }
 
-    @Override
-    public ResponseUserFollowersDTO getFollowers(Integer userId) {
-        User user = this.findById(userId);
-        if(user != null ) {
-            return new ResponseUserFollowersDTO(200, "", user.getUserId(), user.getUserName(), user.getFollowers());
-        }
-        return new ResponseUserFollowersDTO(404, "Usuario nao encontrado", null, null, null);
+    public Boolean isUserValidToFollow(User user, Seller sellerToFollow){
+        return user != null && sellerToFollow != null
+                && !user.getId().equals(sellerToFollow.getId())
+                && !user.getFollowed().contains(sellerToFollow);
     }
 }
