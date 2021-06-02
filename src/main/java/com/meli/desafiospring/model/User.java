@@ -1,5 +1,6 @@
 package com.meli.desafiospring.model;
 
+import com.meli.desafiospring.enums.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,9 +27,17 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "id_follower"))
     private List<User> followers;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "varchar(32) default 'CLIENT'")
+    private UserType userType;
+
     public void addUserFollower(User user){
         List<User> users = this.getFollowers();
         users.add(user);
         this.setFollowers( users );
+    }
+
+    public boolean isUserTypeClient(){
+        return this.userType.equals(UserType.CLIENT);
     }
 }
