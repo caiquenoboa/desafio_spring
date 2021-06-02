@@ -20,14 +20,14 @@ public class FollowersService {
 
         List<User> followers = user.getFollowers();
 
-        return mountObjectOfResponse(user, followers, isEndPointOfCount);
-    }
-
-    private UserResponse mountObjectOfResponse(User user, List<User> followers, boolean isEndPointOfCount){
         if(isEndPointOfCount){
             return new UserResponse(user.getId(), user.getUserName(), followers.size());
         }
 
+        return mountObjectOfResponse(user, followers);
+    }
+
+    private UserResponse mountObjectOfResponse(User user, List<User> followers){
         List<UserResponse> followersResponse = followers.stream()
                                                         .map(u -> new UserResponse( u.getId(), u.getUserName() ))
                                                         .collect(Collectors.toList());
