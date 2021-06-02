@@ -8,7 +8,9 @@ import com.mercadolibre.desafio_spring.repositories.UsuarioRepository;
 import com.mercadolibre.desafio_spring.repositories.VendedorRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,10 +37,12 @@ public class UsuarioService {
 
         List<VendedorDTO> vendedorDTOList = usuario.getFollowed().stream().filter(vendedorDTO1 -> vendedorDTO1.getUserId() != vendedorDTO.getUserId()).collect(Collectors.toList());
         List<UsuarioDTO> usuarioDTOList = vendedor.getFollowers().stream().filter(usuarioDTO1 -> usuarioDTO.getUserId() != usuarioDTO1.getUserId()).collect(Collectors.toList());
-        //vendedorDTOList.stream().map(elemento -> elemento.getUserId()).filter(elemento -> elemento == vendedorDTO.getUserId()).findFirst().orElseThrow();
 
         if(lengthUsuario == vendedorDTOList.size()){
             usuario.getFollowed().add(vendedorDTO);
+        }
+        else{
+            throw new RuntimeException("Usuário já seguia vendedor");
         }
 
         if(lengthVendedor == usuarioDTOList.size()){
@@ -50,8 +54,28 @@ public class UsuarioService {
         vendedorRepository.update(vendedor);
     }
 
-    public Usuario getFollowedList(int userId){
-        return usuarioRepository.findById(userId);
+    public Usuario getFollowedList(int userId, Optional<String> order){
+
+        Usuario usuario = usuarioRepository.findById(userId);
+        if (order.isEmpty()){
+            return usuario;
+        }
+        else if(order.toString().contains("name_asc")){
+            List<VendedorDTO> vendedorDTOList = usuario.getFollowed();
+            Collections.sort(vendedorDTOList);
+            usuario.setFollowed(vendedorDTOList);
+        }
+        else if(order.toString().contains("name_desc")){
+            List<VendedorDTO> vendedorDTOList = usuario.getFollowed();
+            Collections.sort(vendedorDTOList, Collections.reverseOrder());
+            usuario.setFollowed(vendedorDTOList);
+        }
+        else{
+            throw new RuntimeException("order deve ser 'name_asc' ou 'name_desc'");
+        }
+
+        return usuario;
+
     }
 
     public void unfollow(int userId, int userIdToUnfollow) {

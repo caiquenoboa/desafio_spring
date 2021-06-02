@@ -5,6 +5,7 @@ import com.mercadolibre.desafio_spring.models.VendedorDTO;
 import com.mercadolibre.desafio_spring.repositories.PublicacaoRepository;
 import com.mercadolibre.desafio_spring.repositories.UsuarioRepository;
 import com.mercadolibre.desafio_spring.repositories.VendedorRepository;
+import com.mercadolibre.desafio_spring.utils.DateUtil;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -29,20 +30,6 @@ public class PublicacaoService {
     }
 
     public List<Publicacao> getPublicacoesList(int userId) {
-        String sDate1="31/12/1998";
-        try {
-            Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Date date = new Date();
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-        int i = c.get(Calendar.DAY_OF_WEEK) - c.getFirstDayOfWeek();
-        c.add(Calendar.DATE, -i - 14);
-        Date twoWeeksAgo = c.getTime();
-
-
 
         List<Publicacao> publicacaoList = publicacaoRepository.findAll();
 
@@ -53,7 +40,9 @@ public class PublicacaoService {
         for (VendedorDTO vendedorDTO : vendedorDTOList){
             for (Publicacao publicacao : publicacaoList){
                 if(publicacao.getUserId() == vendedorDTO.getUserId()){
-                    publicacaoListFiltered.add(publicacao);
+                    if(DateUtil.isTheDateInTheLast14Days(publicacao.getDate())){
+                        publicacaoListFiltered.add(publicacao);
+                    }
                 }
             }
         }

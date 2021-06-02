@@ -1,6 +1,8 @@
 package com.mercadolibre.desafio_spring.models;
 
-public class VendedorDTO {
+import java.util.Comparator;
+
+public class VendedorDTO implements Comparable<VendedorDTO>{
     private int userId;
     private String userName;
 
@@ -26,5 +28,10 @@ public class VendedorDTO {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    @Override
+    public int compareTo(VendedorDTO vendedorDTO) {
+        return this.getUserName().compareTo(vendedorDTO.getUserName());
     }
 }

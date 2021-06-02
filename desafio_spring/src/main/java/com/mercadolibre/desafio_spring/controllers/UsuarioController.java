@@ -6,6 +6,8 @@ import com.mercadolibre.desafio_spring.services.VendedorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/users")
 public class UsuarioController {
@@ -35,16 +37,18 @@ public class UsuarioController {
 
     // US 0003: Obter uma lista de todos os usuários que seguem um determinado vendedor
     //(quem me segue?)
+    // US 0008
     @GetMapping("/{userId}/followers/list")
-    public ResponseEntity getFollowersList(@PathVariable int userId){
-        return ResponseEntity.ok(vendedorService.getFoloowersList(userId));
+    public ResponseEntity getFollowersList(@PathVariable int userId, @RequestParam("order") Optional<String> order){
+        return ResponseEntity.ok(vendedorService.getFollowersList(userId, order));
     }
 
     //US 0004: Obter uma lista de todos os vendedores que um determinado usuário segue
     //(quem estou seguindo?)
+    // US0008
     @GetMapping("/{userId}/followed/list")
-    public ResponseEntity<Usuario> getFollowedList(@PathVariable int userId){
-        return ResponseEntity.ok(usuarioService.getFollowedList(userId));
+    public ResponseEntity<Usuario> getFollowedList(@PathVariable int userId, @RequestParam("order") Optional<String> order){
+        return ResponseEntity.ok(usuarioService.getFollowedList(userId, order));
     }
 
     //US 0007: Ser capaz de realizar a ação de “Deixar de seguir” (parar de seguir) um
