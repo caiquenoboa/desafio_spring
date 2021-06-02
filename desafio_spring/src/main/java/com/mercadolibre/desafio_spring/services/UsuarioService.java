@@ -85,6 +85,25 @@ public class UsuarioService {
         UsuarioDTO usuarioDTO = new UsuarioDTO((usuario.getUserId()), usuario.getUserName());
         VendedorDTO vendedorDTO = new VendedorDTO((vendedor.getUserId()), vendedor.getUserName());
 
+
+        int lengthUsuario = usuario.getFollowed().size();
+        int lengthVendedor = vendedor.getFollowers().size();
+
+        List<VendedorDTO> vendedorDTOList = usuario.getFollowed().stream().filter(vendedorDTO1 -> vendedorDTO1.getUserId() != vendedorDTO.getUserId()).collect(Collectors.toList());
+        List<UsuarioDTO> usuarioDTOList = vendedor.getFollowers().stream().filter(usuarioDTO1 -> usuarioDTO.getUserId() != usuarioDTO1.getUserId()).collect(Collectors.toList());
+
+        if(lengthUsuario != vendedorDTOList.size()){
+            usuario.getFollowed().add(vendedorDTO);
+        }
+        else{
+            throw new RuntimeException("Usuário não seguia vendedor");
+        }
+
+        if(lengthVendedor != usuarioDTOList.size()){
+            vendedor.getFollowers().add(usuarioDTO);
+        }
+
+
         usuario.setFollowed(usuario.getFollowed().stream().filter(vendedorDTO1 -> vendedorDTO1.getUserId() != vendedorDTO.getUserId()).collect(Collectors.toList()));
 
         vendedor.setFollowers(vendedor.getFollowers().stream().filter(usuarioDTO1 -> usuarioDTO.getUserId() != usuarioDTO1.getUserId()).collect(Collectors.toList()));
@@ -92,5 +111,8 @@ public class UsuarioService {
 
         usuarioRepository.update(usuario);
         vendedorRepository.update(vendedor);
+
+
+
     }
 }
