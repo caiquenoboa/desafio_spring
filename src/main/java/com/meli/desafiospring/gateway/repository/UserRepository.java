@@ -14,4 +14,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
                     "where uf.id_user = :userId and uf.id_follower = :userIdFollower", nativeQuery = true)
     Optional<User> findByUserIdAndUserIdFollower(@Param("userId") Integer userId,
                                                  @Param("userIdFollower") Integer userIdFollower);
+
 }
