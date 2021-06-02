@@ -1,10 +1,8 @@
 package com.mercadolivre.desafio_sring.repositories;
 
-import com.mercadolivre.desafio_sring.models.User;
+import com.mercadolivre.desafio_sring.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    Long countByFollowingUserId(Long userId);
-}
+public interface ProductRepository extends JpaRepository<Product, Long> { }

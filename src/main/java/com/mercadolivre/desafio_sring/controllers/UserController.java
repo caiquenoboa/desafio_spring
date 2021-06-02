@@ -26,17 +26,15 @@ public class UserController {
     }
 
     @PostMapping(value = "{userId}/follow/{userIdToFollow}")
-    public ResponseEntity<UserFollowersResponseDTO> createFollowUser(@PathVariable Long userId, @PathVariable Long userIdToFollow) {
-        UserFollowersRequestDTO userFollowRequestDTO = new UserFollowersRequestDTO(userId, userIdToFollow);
-        UserFollowersResponseDTO userFollowResponseDTO = userService.followUser(userFollowRequestDTO);
+    public ResponseEntity<String> createFollowUser(@PathVariable Long userId, @PathVariable Long userIdToFollow) {
+        userService.followUser(userId, userIdToFollow);
 
         return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = "{userId}/followers/count")
     public ResponseEntity<UserFollowsCountResponseDTO> getFollowersCountUser(@PathVariable Long userId) {
-        UserFollowsCountRequestDTO userFollowRequestDTO = new UserFollowsCountRequestDTO(userId);
-        UserFollowsCountResponseDTO userFollowsCountResponseDTO = userService.followersCountUser(userFollowRequestDTO);
+        UserFollowsCountResponseDTO userFollowsCountResponseDTO = userService.followersCountUser(userId);
 
         return ResponseEntity.ok(userFollowsCountResponseDTO);
     }
@@ -55,5 +53,12 @@ public class UserController {
         UserFollowedListResponseDTO userFollowedListResponseDTO = userService.followedListUser(userFollowedListRequestDTO);
 
         return ResponseEntity.ok(userFollowedListResponseDTO);
+    }
+
+    @PostMapping(value = "/{userId}/unfollow/{userIdToUnfollow}")
+    public ResponseEntity<String> getProductsFollowed(@PathVariable Long userId, @PathVariable Long userIdToUnfollow) {
+        userService.unfollowUser(userId, userIdToUnfollow);
+
+        return ResponseEntity.ok().build();
     }
 }

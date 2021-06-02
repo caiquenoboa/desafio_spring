@@ -1,12 +1,12 @@
-package com.mercadolivre.desafio_sring.dtos.userDTOs;
+package com.mercadolivre.desafio_sring.dtos.postDTOs;
 
-public class UserFollowsCountRequestDTO {
+public class PostGetFollowedPostsRequestDTO {
     private Long userId;
 
-    public UserFollowsCountRequestDTO() {
+    public PostGetFollowedPostsRequestDTO() {
     }
 
-    public UserFollowsCountRequestDTO(Long userId) {
+    public PostGetFollowedPostsRequestDTO(Long userId) {
         this.userId = userId;
     }
 

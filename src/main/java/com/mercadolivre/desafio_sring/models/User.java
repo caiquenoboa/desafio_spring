@@ -26,15 +26,19 @@ public class User {
     @ManyToMany(mappedBy = "following")
     private List<User> followers = new ArrayList<>();
 
+    @OneToMany
+    private List<Post> posts;
+
     public User() {
     }
 
-    public User(Long userId, String userName, Boolean isSeller, List<User> following, List<User> followers) {
+    public User(Long userId, String userName, Boolean isSeller, List<User> following, List<User> followers, List<Post> posts) {
         this.userId = userId;
         this.userName = userName;
         this.isSeller = isSeller;
         this.following = following;
         this.followers = followers;
+        this.posts = posts;
     }
 
     public Long getUserId() {
@@ -57,11 +61,11 @@ public class User {
         return followers;
     }
 
-    public void addUsersFollowing(User userToFollow) {
-        this.following.add(userToFollow);
+    public List<Post> getPosts() {
+        return posts;
     }
 
-    public void addUsersFollower(User userFollower) {
-        this.followers.add(userFollower);
+    public void addUsersFollowing(User userToFollow) {
+        this.following.add(userToFollow);
     }
 }

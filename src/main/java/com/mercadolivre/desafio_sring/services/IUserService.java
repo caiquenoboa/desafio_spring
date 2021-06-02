@@ -5,11 +5,13 @@ import com.mercadolivre.desafio_sring.dtos.userDTOs.*;
 public interface IUserService {
     UserCreateResponseDTO createUser(UserCreateRequestDTO userCreateRequestDTO);
 
-    UserFollowersResponseDTO followUser(UserFollowersRequestDTO userFollowRequestDTO);
+    void followUser(Long userId, Long userIdToFollow);
 
-    UserFollowsCountResponseDTO followersCountUser(UserFollowsCountRequestDTO userFollowsCountRequestDTO);
+    UserFollowsCountResponseDTO followersCountUser(Long userId);
 
     UserFollowersListResponseDTO followersListUser(UserFollowersListRequestDTO userFollowersListRequestDTO);
 
     UserFollowedListResponseDTO followedListUser(UserFollowedListRequestDTO userFollowedListRequestDTO);
+
+    void unfollowUser(Long userId, Long userIdToUnfollow);
 }

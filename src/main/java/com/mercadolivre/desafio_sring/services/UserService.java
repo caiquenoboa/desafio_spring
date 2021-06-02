@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements IUserService {
@@ -32,19 +33,17 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserFollowersResponseDTO followUser(UserFollowersRequestDTO userFollowRequestDTO) {
-        UserFollowersResponseDTO userFollowResponseDTO = new UserFollowersResponseDTO();
-
-        if (userFollowRequestDTO.getUserId().equals(userFollowRequestDTO.getUserIdToFollow())) {
+    public void followUser(Long userId, Long userIdToFollow) {
+        if (userId.equals(userIdToFollow)) {
             throw  new GeneralException("The user cannot follow himself", HttpStatus.BAD_REQUEST.value());
         }
 
         User user = userRepository
-                .findById(userFollowRequestDTO.getUserId())
+                .findById(userId)
                 .orElseThrow(() -> new ObjectNotFoundException("User not found"));
 
         User userToFollow = userRepository
-                .findById(userFollowRequestDTO.getUserIdToFollow())
+                .findById(userIdToFollow)
                 .orElseThrow(() -> new ObjectNotFoundException("User to follow not found"));
 
         if (user.getIsSeller()) {
@@ -61,16 +60,14 @@ public class UserService implements IUserService {
 
         user.addUsersFollowing(userToFollow);
         userRepository.save(user);
-
-        return userFollowResponseDTO;
     }
 
     @Override
-    public UserFollowsCountResponseDTO followersCountUser(UserFollowsCountRequestDTO userFollowsCountRequestDTO) {
+    public UserFollowsCountResponseDTO followersCountUser(Long userId) {
         UserFollowsCountResponseDTO userFollowsCountResponseDTO = new UserFollowsCountResponseDTO();
 
         User user = userRepository
-                .findById(userFollowsCountRequestDTO.getUserId())
+                .findById(userId)
                 .orElseThrow(() -> new ObjectNotFoundException("User not found"));
 
         if (!user.getIsSeller()) {
@@ -142,5 +139,22 @@ public class UserService implements IUserService {
         userFollowedListResponseDTO.setFollowing(followedDTO);
 
         return userFollowedListResponseDTO;
+    }
+
+    @Override
+    public void unfollowUser(Long userId, Long userIdToUnfollow) {
+        User user = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new ObjectNotFoundException("User not found"));
+
+        User userFollowing = user.getFollowing()
+                .stream()
+                .filter(x -> x.getUserId().equals(userIdToUnfollow))
+                .findFirst()
+                .orElseThrow(() -> new ObjectNotFoundException("User following not found"));
+
+        user.getFollowing().remove(userFollowing);
+
+        userRepository.save(user);
     }
 }

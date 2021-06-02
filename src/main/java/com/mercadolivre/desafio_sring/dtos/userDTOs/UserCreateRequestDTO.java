@@ -37,6 +37,6 @@ public class UserCreateRequestDTO {
     }
 
     public User toModel() {
-        return new User(null, this.userName, this.isSeller, null, null);
+        return new User(null, this.userName, this.isSeller, null, null, null);
     }
 }
