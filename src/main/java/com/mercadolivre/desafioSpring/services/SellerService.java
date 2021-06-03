@@ -11,6 +11,7 @@ public interface SellerService {
     Seller findById(Integer sellerId);
     Seller toModel(UserToCreateRequest userToCreateRequest);
     void followSeller(Integer userId, Integer sellerIdToFollow);
+    void unfollowSeller(Integer userId, Integer sellerIdToUnfollow);
     SellerFollowersResponse getFollowersNumber(Integer sellerId);
     SellerFollowersInfoResponse getFollowersInfo(Integer sellerId);
 }

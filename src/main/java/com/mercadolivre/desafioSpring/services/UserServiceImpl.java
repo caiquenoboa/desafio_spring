@@ -43,6 +43,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public void unfollowSeller(Seller sellerToFollow, Integer userId, Integer sellerIdToUnfollow) {
+        User user = this.findById(userId);
+        if(user.getFollowed().contains(sellerToFollow)) {
+            user.getFollowed().remove(sellerToFollow);
+            userRepository.save(user);
+        }
+    }
+
+    @Override
     public User toModel(UserToCreateRequest userToCreateRequest) {
         return new User(null, userToCreateRequest.getUserName(), null);
     }

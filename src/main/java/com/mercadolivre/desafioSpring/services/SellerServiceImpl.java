@@ -45,6 +45,12 @@ public class SellerServiceImpl implements SellerService{
     }
 
     @Override
+    public void unfollowSeller(Integer userId, Integer sellerIdToUnfollow) {
+        Seller sellerToFollow = this.findById(sellerIdToUnfollow);
+        userService.unfollowSeller(sellerToFollow, userId, sellerIdToUnfollow);
+    }
+
+    @Override
     public SellerFollowersResponse getFollowersNumber(Integer sellerId) {
         Seller seller = this.findById(sellerId);
         if(seller != null ) {
