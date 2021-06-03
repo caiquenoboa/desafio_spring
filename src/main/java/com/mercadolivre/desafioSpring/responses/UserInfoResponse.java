@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class UserInfoResponse {
 
-    private Integer id;
+    private Integer userId;
     private String userName;
     @JsonView(UserView.Detailed.class)
     private Boolean isSeller;

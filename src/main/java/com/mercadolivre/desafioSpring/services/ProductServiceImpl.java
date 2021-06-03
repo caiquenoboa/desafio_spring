@@ -13,17 +13,20 @@ public class ProductServiceImpl implements ProductService{
 
     private final ProductRepository productRepository;
 
+    @Override
     public Product toModel(ProductToCreateRequest productToCreateRequest) {
         return new Product(null, productToCreateRequest.getProductName(), productToCreateRequest.getType(),
                 productToCreateRequest.getBrand(), productToCreateRequest.getColor(), productToCreateRequest.getNotes());
     }
 
+    @Override
     public ProductInfoResponse createProduct(ProductToCreateRequest productToCreateRequest) {
         Product product = productRepository.save(this.toModel(productToCreateRequest));
         return new ProductInfoResponse(product.getId(), product.getProductName(), product.getType(),
                 product.getBrand(), product.getColor(), product.getNotes());
     }
 
+    @Override
     public Product findById(Integer productId) {
         return productRepository.findById(productId).orElse(null);
     }

@@ -1,6 +1,6 @@
 package com.mercadolivre.desafioSpring.services;
 
-import com.mercadolivre.desafioSpring.exceptions.UserNotFoundException;
+import com.mercadolivre.desafioSpring.exceptions.StandardNotFoundException;
 import com.mercadolivre.desafioSpring.models.Seller;
 import com.mercadolivre.desafioSpring.models.User;
 import com.mercadolivre.desafioSpring.repositories.UserRepository;
@@ -20,47 +20,59 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final SellerService sellerService;
 
+    @Override
     public UserInfoResponse createUser(UserToCreateRequest userToCreateRequest) {
         User user = userRepository.save(this.toModel(userToCreateRequest));
         return new UserInfoResponse(user.getId(), user.getUserName(), false);
     }
 
+    @Override
     public User findById(Integer userId) {
         return userRepository.findById(userId).orElse(null);
     }
 
+    @Override
     public User toModel(UserToCreateRequest userToCreateRequest) {
         return new User(null, userToCreateRequest.getUserName(), null);
     }
 
+    @Override
     public void followSeller(Integer userId, Integer sellerIdToFollow) {
         User user = this.findById(userId);
         Seller sellerToFollow = sellerService.findById(sellerIdToFollow);
 
-        if(!isUserValidToFollow(user, sellerToFollow)) {
-            throw new UserNotFoundException("Falha ao usuario " + userId + " seguir o usuario " +
-                    sellerIdToFollow);
+        if(isUserValidToFollow(user, sellerToFollow, userId, sellerIdToFollow)) {
+            user.getFollowed().add(sellerToFollow);
+            userRepository.save(user);
         }
-        user.getFollowed().add(sellerToFollow);
-        userRepository.save(user);
     }
 
+    @Override
     public UserFollowedInfoResponse getFollowedInfo(Integer userId) {
         User user = this.findById(userId);
         if(user != null ) {
             List<UserInfoResponse> followedInfoResponseList = user.getFollowed().stream()
-                    .map(follower -> new UserInfoResponse(follower.getId(),
-                            follower.getUserName(),
-                            false))
+                    .map(follower -> new UserInfoResponse(follower.getId(), follower.getUserName(),false))
                     .collect(Collectors.toList());
             return new UserFollowedInfoResponse(user.getId(), user.getUserName(), followedInfoResponseList);
         }
-        throw new UserNotFoundException("Usuario " + userId + " nao encontrado.");
+        throw new StandardNotFoundException("Usuario " + userId + " nao encontrado.");
     }
 
-    public Boolean isUserValidToFollow(User user, Seller sellerToFollow){
-        return user != null && sellerToFollow != null
-                && !user.getId().equals(sellerToFollow.getId())
-                && !user.getFollowed().contains(sellerToFollow);
+    @Override
+    public Boolean isUserValidToFollow(User user, Seller sellerToFollow, Integer userId, Integer sellerIdToFollow){
+        String message = "";
+        if(user == null){
+            message += "Usuario " + userId + " nao existe. ";
+        }else if(sellerToFollow == null){
+            message += "Vendedor " + sellerIdToFollow + " nao existe. ";
+        }else if(userId.equals(sellerIdToFollow)){
+            message += "Os usuarios nao podem ser iguais. ";
+        }else if(user.getFollowed().contains(sellerToFollow)){
+            message += "O usuario " + userId + " ja segue o vendedor " + sellerIdToFollow + ". ";
+        }
+        if(!message.equals("")){ throw new StandardNotFoundException(message); }
+
+        return true;
     }
 }

@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class ProductToCreateRequest {
-    private Integer productId;
     private String productName;
     private String type;
     private String brand;

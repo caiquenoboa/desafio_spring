@@ -12,11 +12,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Data
 public class PostInfoResponse {
-    private Integer id;
-    private Integer sellerId;
+    private Integer userId;
+    private Integer id_post;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
-    private ProductInfoResponse productInfoResponse;
+    private ProductInfoResponse detail;
     private Integer category;
     private Double price;
 }

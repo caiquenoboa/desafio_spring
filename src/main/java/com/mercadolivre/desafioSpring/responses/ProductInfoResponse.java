@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class ProductInfoResponse {
-    private Integer id;
+    private Integer product_id;
     private String productName;
     private String type;
     private String brand;

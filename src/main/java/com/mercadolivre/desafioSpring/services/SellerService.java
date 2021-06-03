@@ -8,8 +8,8 @@ import com.mercadolivre.desafioSpring.responses.UserInfoResponse;
 
 public interface SellerService {
     UserInfoResponse createSeller(UserToCreateRequest userToCreateRequest);
+    Seller findById(Integer sellerId);
     Seller toModel(UserToCreateRequest userToCreateRequest);
-    Seller findById(Integer sellerIdToFollow);
     SellerFollowersResponse getFollowersNumber(Integer sellerId);
     SellerFollowersInfoResponse getFollowersInfo(Integer sellerId);
 }

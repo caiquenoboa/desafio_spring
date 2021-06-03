@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @Data
 public class PostToCreateRequest {
     private Integer userId;
-    private Integer idPost;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
     private ProductToCreateRequest detail;
