@@ -4,6 +4,7 @@
 Gabriel Henrique Leal Garcia - (Grupo 5)
 
 Este projeto foi implementaod utilizando o banco de dados *H2*.
+Os arquivos estão na raiz do projeto, portanto não é necessário se preocupar com configurações.
 
 
 ## Run
@@ -12,7 +13,7 @@ Para iniciar, abra o projeto no *IntelliJ* e clique em *Run*.
 Se preferir, execute o projeto no terminal `mvn spring-boot:run`.
 
 ## Swagger
-Para documentar as *APIs* e facilitar os testes, este projeto está mapeado com *Swagger*.
+Para documentar as *APIs* e facilitar os testes, este projeto está mapeado com o *Swagger*.
 
 Inicie o projeto e acesse [`http://localhost:8080/swagger-ui.html`](http://localhost:8080/swagger-ui.html).
 
