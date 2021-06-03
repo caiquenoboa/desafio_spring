@@ -20,10 +20,15 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public ProductInfoResponse createProduct(ProductToCreateRequest productToCreateRequest) {
-        Product product = productRepository.save(this.toModel(productToCreateRequest));
+    public ProductInfoResponse fromModel(Product product) {
         return new ProductInfoResponse(product.getId(), product.getProductName(), product.getType(),
                 product.getBrand(), product.getColor(), product.getNotes());
+    }
+
+    @Override
+    public ProductInfoResponse createProduct(ProductToCreateRequest productToCreateRequest) {
+        Product product = productRepository.save(this.toModel(productToCreateRequest));
+        return this.fromModel(product);
     }
 
     @Override

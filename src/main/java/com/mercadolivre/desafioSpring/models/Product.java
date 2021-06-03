@@ -11,7 +11,6 @@ import javax.validation.constraints.NotBlank;
 @Data
 @Entity
 public class Product {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -30,5 +29,4 @@ public class Product {
 
     @NotBlank(message = "Campo obrigatório")
     private String notes;
-
 }

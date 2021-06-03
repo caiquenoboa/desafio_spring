@@ -2,6 +2,7 @@ package com.mercadolivre.desafioSpring.services;
 
 import com.mercadolivre.desafioSpring.exceptions.StandardNotFoundException;
 import com.mercadolivre.desafioSpring.models.Seller;
+import com.mercadolivre.desafioSpring.models.User;
 import com.mercadolivre.desafioSpring.repositories.SellerRepository;
 import com.mercadolivre.desafioSpring.repositories.UserRepository;
 import com.mercadolivre.desafioSpring.requests.UserToCreateRequest;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 public class SellerServiceImpl implements SellerService{
 
     private final SellerRepository sellerRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Override
     public UserInfoResponse createSeller(UserToCreateRequest userToCreateRequest) {
@@ -38,11 +39,16 @@ public class SellerServiceImpl implements SellerService{
     }
 
     @Override
+    public void followSeller(Integer userId, Integer sellerIdToFollow) {
+        Seller sellerToFollow = this.findById(sellerIdToFollow);
+        userService.followSeller(sellerToFollow, userId, sellerIdToFollow);
+    }
+
+    @Override
     public SellerFollowersResponse getFollowersNumber(Integer sellerId) {
         Seller seller = this.findById(sellerId);
         if(seller != null ) {
-            //return new SellerFollowersResponse(seller.getId(), seller.getUserName(), seller.getFollowers().size());
-            return new SellerFollowersResponse(seller.getId(), seller.getUserName(), userRepository.countByFollowedId(sellerId));
+            return new SellerFollowersResponse(seller.getId(), seller.getUserName(), userService.countByFollowedId(sellerId));
 
         }
         throw new StandardNotFoundException("Vendedor " + sellerId + " nao encontrado.");
@@ -52,12 +58,11 @@ public class SellerServiceImpl implements SellerService{
     public SellerFollowersInfoResponse getFollowersInfo(Integer sellerId) {
         Seller seller = this.findById(sellerId);
         if(seller != null ) {
-            List<UserInfoResponse> followersInfoResponseList = seller.getFollowers().stream()
-                                                                      .map(follower -> new UserInfoResponse(follower.getId(),
-                                                                                                      follower.getUserName(),
-                                                                                               false))
-                                                                      .collect(Collectors.toList());
-            return new SellerFollowersInfoResponse(seller.getId(), seller.getUserName(), followersInfoResponseList);
+            List<UserInfoResponse> followListResp = seller.getFollowers().stream()
+                                                           .map(follower -> new UserInfoResponse(follower.getId(),
+                                                                follower.getUserName(),false))
+                                                           .collect(Collectors.toList());
+            return new SellerFollowersInfoResponse(seller.getId(), seller.getUserName(), followListResp);
         }
         throw new StandardNotFoundException("Vendedor " + sellerId + " nao encontrado.");
     }

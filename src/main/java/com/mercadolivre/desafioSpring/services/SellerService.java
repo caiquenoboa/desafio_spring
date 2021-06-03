@@ -10,6 +10,7 @@ public interface SellerService {
     UserInfoResponse createSeller(UserToCreateRequest userToCreateRequest);
     Seller findById(Integer sellerId);
     Seller toModel(UserToCreateRequest userToCreateRequest);
+    void followSeller(Integer userId, Integer sellerIdToFollow);
     SellerFollowersResponse getFollowersNumber(Integer sellerId);
     SellerFollowersInfoResponse getFollowersInfo(Integer sellerId);
 }

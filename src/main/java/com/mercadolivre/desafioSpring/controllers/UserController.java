@@ -34,7 +34,7 @@ public class UserController {
 
     @PostMapping(path = "/{userId}/follow/{userIdToFollow}")
     public ResponseEntity<HttpStatus> followSeller(@PathVariable Integer userId, @PathVariable Integer userIdToFollow) {
-        userService.followSeller(userId, userIdToFollow);
+        sellerService.followSeller(userId, userIdToFollow);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

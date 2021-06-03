@@ -17,5 +17,4 @@ public class PostToCreateRequest {
     private ProductToCreateRequest detail;
     private Integer category;
     private Double price;
-
 }

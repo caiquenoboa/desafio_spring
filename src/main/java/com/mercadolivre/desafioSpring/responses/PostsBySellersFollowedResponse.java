@@ -4,11 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ExceptionResponse {
-    private Integer status;
-    private String message;
-    private Long timestemp;
+public class PostsBySellersFollowedResponse {
+    private Integer userId;
+    List<PostInfoResponse> posts;
 }

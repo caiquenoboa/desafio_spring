@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    Integer countByFollowedId(Integer id);
+    Integer countByFollowedId(Integer userId);
 }

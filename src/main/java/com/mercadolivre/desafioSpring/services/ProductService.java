@@ -8,4 +8,5 @@ public interface ProductService {
     Product toModel(ProductToCreateRequest productToCreateRequest);
     ProductInfoResponse createProduct(ProductToCreateRequest productToCreateRequest);
     Product findById(Integer productId);
+    ProductInfoResponse fromModel(Product product);
 }

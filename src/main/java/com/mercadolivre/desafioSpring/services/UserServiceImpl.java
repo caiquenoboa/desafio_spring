@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
-    private final SellerService sellerService;
 
     @Override
     public UserInfoResponse createUser(UserToCreateRequest userToCreateRequest) {
@@ -32,19 +31,20 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User toModel(UserToCreateRequest userToCreateRequest) {
-        return new User(null, userToCreateRequest.getUserName(), null);
-    }
+    public Integer countByFollowedId(Integer userId){return userRepository.countByFollowedId(userId);}
 
     @Override
-    public void followSeller(Integer userId, Integer sellerIdToFollow) {
+    public void followSeller(Seller sellerToFollow, Integer userId, Integer sellerIdToFollow) {
         User user = this.findById(userId);
-        Seller sellerToFollow = sellerService.findById(sellerIdToFollow);
-
-        if(isUserValidToFollow(user, sellerToFollow, userId, sellerIdToFollow)) {
+        if(this.isUserValidToFollow(user, sellerToFollow, userId, sellerIdToFollow)) {
             user.getFollowed().add(sellerToFollow);
             userRepository.save(user);
         }
+    }
+
+    @Override
+    public User toModel(UserToCreateRequest userToCreateRequest) {
+        return new User(null, userToCreateRequest.getUserName(), null);
     }
 
     @Override

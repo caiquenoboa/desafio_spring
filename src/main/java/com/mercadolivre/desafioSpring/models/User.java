@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -16,7 +15,6 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -28,9 +26,6 @@ public class User {
     @JoinTable(name="FOLLOWERS",
                joinColumns = @JoinColumn(name = "USER_ID"),
                inverseJoinColumns = @JoinColumn(name = "SELLER_ID"))
-    //@JoinTable(name="SELLER_FOLLOWERS", joinColumns = @JoinColumn(name="USER_ID")
-    //            , inverseJoinColumns = @JoinColumn(name="FOLLOWER_ID"))
     @JsonIgnore
     private List<Seller> followed;
-
 }
