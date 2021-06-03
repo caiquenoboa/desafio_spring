@@ -1,16 +1,16 @@
 # Desafio Java Spring Boot
 
 ## Infos
-### Gabriel Henrique Leal Garcia (Grupo 5)
-### Este projeto foi implmentado utilizando banco de dados *(H2)*.
+#### Gabriel Henrique Leal Garcia (Grupo 5)
+#### Este projeto foi implmentado utilizando banco de dados *(H2)*.
 
 
 ## Run
-### Para iniciar o projeto, abra o projeto no *IntelliJ* e clique em *Run*.
+#### Para iniciar o projeto, abra o projeto no *IntelliJ* e clique em *Run*.
 
 ## Swagger
-### Para facilitar os testes e documentar as *APIs*, este projeto está mapeado com *Swagger*.
-### Para acessar, inicie o projeto e acesse [`http://localhost:8080/swagger-ui.html`](http://localhost:8080/swagger-ui.html).
+#### Para facilitar os testes e documentar as *APIs*, este projeto está mapeado com *Swagger*.
+#### Para acessar, inicie o projeto e acesse [`http://localhost:8080/swagger-ui.html`](http://localhost:8080/swagger-ui.html).
 
 ## Registros já cadastrados
 ### Usuários
