@@ -19,15 +19,13 @@ public class PostServiceImpl implements PostService{
     private final SellerService sellerService;
 
     public Post toModel(PostToCreateRequest postToCreateRequest) {
-        Product product = productService.findById(postToCreateRequest.getProductToCreateRequest().getProductId());
-        Seller seller = sellerService.findById(postToCreateRequest.getSellerId());
-        return new Post(null, seller, postToCreateRequest.getDate(),
-                product,
-                postToCreateRequest.getCategory(), postToCreateRequest.getPrice());
+        Seller seller = sellerService.findById(postToCreateRequest.getUserId());
+        return new Post(null, seller, postToCreateRequest.getDate(), null,
+                        postToCreateRequest.getCategory(), postToCreateRequest.getPrice());
     }
 
     public PostInfoResponse createPost(PostToCreateRequest postToCreateRequest) {
-        ProductInfoResponse productInfoResponse = productService.createProduct(postToCreateRequest.getProductToCreateRequest());
+        ProductInfoResponse productInfoResponse = productService.createProduct(postToCreateRequest.getDetail());
         Post post = postRepository.save(this.toModel(postToCreateRequest));
         return new PostInfoResponse(post.getId(), post.getSeller().getId(), post.getDate(),
                 productInfoResponse, post.getCategory(), post.getPrice());

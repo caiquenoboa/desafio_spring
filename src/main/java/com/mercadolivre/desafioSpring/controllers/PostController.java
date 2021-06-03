@@ -21,7 +21,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/newpost")
-    public ResponseEntity<PostInfoResponse> createUser(@RequestBody @Valid PostToCreateRequest postToCreateRequest) {
+    public ResponseEntity<PostInfoResponse> createPost(@RequestBody @Valid PostToCreateRequest postToCreateRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(postService.createPost(postToCreateRequest));
     }
 

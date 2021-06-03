@@ -11,10 +11,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Data
 public class PostToCreateRequest {
-    private Integer sellerId;
+    private Integer userId;
     private Integer idPost;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate date;
-    private ProductToCreateRequest productToCreateRequest;
+    private ProductToCreateRequest detail;
     private Integer category;
     private Double price;
 
