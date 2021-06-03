@@ -6,6 +6,7 @@ import com.mercadolivre.desafio_sring.dtos.userDTOs.response.UserFollowedListRes
 import com.mercadolivre.desafio_sring.dtos.userDTOs.response.UserFollowersListResponseDTO;
 import com.mercadolivre.desafio_sring.dtos.userDTOs.response.UserFollowsCountResponseDTO;
 import com.mercadolivre.desafio_sring.services.UserService;
+import io.swagger.annotations.Api;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
+@Api(tags = "Usuários", description = "Gerenciamento de usuários")
 public class UserController {
 
     private final UserService userService;
