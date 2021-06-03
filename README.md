@@ -17,7 +17,8 @@ Para documentar as *APIs* e facilitar os testes, este projeto está mapeado com 
 Inicie o projeto e acesse [`http://localhost:8080/swagger-ui.html`](http://localhost:8080/swagger-ui.html).
 
 ## Registros já cadastrados
-### Usuários
+Usuários
+
 id | userName | isSeller
 --- | --- | ---
 1 | Cliente 1 | `false`
