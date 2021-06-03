@@ -31,6 +31,9 @@ public class User {
     @Column(nullable = false, columnDefinition = "varchar(32) default 'CLIENT'")
     private UserType userType;
 
+    @OneToMany(mappedBy="user", fetch = FetchType.LAZY)
+    private List<Post> posts;
+
     public void addUserFollower(User user){
         List<User> users = this.getFollowers();
         users.add(user);
