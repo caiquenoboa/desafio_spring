@@ -6,16 +6,12 @@ import com.mercadolivre.desafioSpring.models.Seller;
 import com.mercadolivre.desafioSpring.models.User;
 import com.mercadolivre.desafioSpring.repositories.PostRepository;
 import com.mercadolivre.desafioSpring.requests.PostToCreateRequest;
-import com.mercadolivre.desafioSpring.responses.PostInfoResponse;
-import com.mercadolivre.desafioSpring.responses.PostsBySellersFollowedResponse;
-import com.mercadolivre.desafioSpring.responses.ProductInfoResponse;
-import com.mercadolivre.desafioSpring.responses.UserInfoResponse;
+import com.mercadolivre.desafioSpring.responses.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -76,5 +72,17 @@ public class PostServiceImpl implements PostService{
             Collections.reverse(postsInfoResponse);
         }
         return new PostsBySellersFollowedResponse(userId, postsInfoResponse);
+    }
+
+    @Override
+    public PromotionalProductsResponse getPromotionalProductsNumber(Integer userId) {
+        Seller seller = sellerService.findById(userId);
+        if(seller != null ) {
+            List<Post> promoPosts = seller.getPosts().stream()
+                                          .filter(post -> post.getHasPromo().equals(true))
+                                          .collect(Collectors.toList());
+            return new PromotionalProductsResponse(seller.getId(), seller.getUserName(), promoPosts.size());
+        }
+        throw new StandardNotFoundException("Vendedor " + userId + " nao encontrado.");
     }
 }

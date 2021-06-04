@@ -5,7 +5,10 @@ import com.mercadolivre.desafioSpring.exceptions.StandardNotFoundException;
 import com.mercadolivre.desafioSpring.requests.PostToCreateRequest;
 import com.mercadolivre.desafioSpring.responses.PostInfoResponse;
 import com.mercadolivre.desafioSpring.responses.PostsBySellersFollowedResponse;
+import com.mercadolivre.desafioSpring.responses.PromotionalProductsResponse;
+import com.mercadolivre.desafioSpring.responses.SellerFollowersResponse;
 import com.mercadolivre.desafioSpring.services.PostService;
+import com.mercadolivre.desafioSpring.services.ProductService;
 import com.mercadolivre.desafioSpring.views.PostView;
 import com.mercadolivre.desafioSpring.views.UserView;
 import lombok.AllArgsConstructor;
@@ -48,5 +51,11 @@ public class PostController {
                                                 "(endpoint incorreto para esta funcionalidade).");
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(postService.createPost(postToCreateRequest));
+    }
+
+    @GetMapping(path = "/{userId}/countPromo/")
+    public ResponseEntity<PromotionalProductsResponse> getPromotionalProductsNumber(@PathVariable Integer userId) {
+        PromotionalProductsResponse promotionalProductsResponse = postService.getPromotionalProductsNumber(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(promotionalProductsResponse);
     }
 }
