@@ -23,9 +23,9 @@ public class PostInfoResponse {
     private ProductInfoResponse detail;
     private Integer category;
     private Double price;
-    @JsonView(PostView.Promotional.class)
+    @JsonView(PostView.PromotionalSimple.class)
     private Boolean hasPromo;
-    @JsonView(PostView.Promotional.class)
+    @JsonView(PostView.PromotionalSimple.class)
     private Double discount;
 
     public static Comparator<PostInfoResponse> PostInfoResponseNameComparator = new Comparator<PostInfoResponse>() {

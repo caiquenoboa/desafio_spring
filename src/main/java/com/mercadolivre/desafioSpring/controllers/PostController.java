@@ -3,12 +3,8 @@ package com.mercadolivre.desafioSpring.controllers;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.mercadolivre.desafioSpring.exceptions.StandardNotFoundException;
 import com.mercadolivre.desafioSpring.requests.PostToCreateRequest;
-import com.mercadolivre.desafioSpring.responses.PostInfoResponse;
-import com.mercadolivre.desafioSpring.responses.PostsBySellersFollowedResponse;
-import com.mercadolivre.desafioSpring.responses.PromotionalProductsResponse;
-import com.mercadolivre.desafioSpring.responses.SellerFollowersResponse;
+import com.mercadolivre.desafioSpring.responses.*;
 import com.mercadolivre.desafioSpring.services.PostService;
-import com.mercadolivre.desafioSpring.services.ProductService;
 import com.mercadolivre.desafioSpring.views.PostView;
 import com.mercadolivre.desafioSpring.views.UserView;
 import lombok.AllArgsConstructor;
@@ -43,7 +39,7 @@ public class PostController {
     }
 
     @PostMapping("/newpromopost")
-    @JsonView(PostView.Promotional.class)
+    @JsonView(PostView.PromotionalDetailed.class)
     public ResponseEntity<PostInfoResponse> createPromotionalPost
             (@RequestBody @Valid PostToCreateRequest postToCreateRequest) {
         if(postToCreateRequest.getHasPromo().equals(false) || postToCreateRequest.getDiscount().equals(0.0)){
@@ -57,5 +53,12 @@ public class PostController {
     public ResponseEntity<PromotionalProductsResponse> getPromotionalProductsNumber(@PathVariable Integer userId) {
         PromotionalProductsResponse promotionalProductsResponse = postService.getPromotionalProductsNumber(userId);
         return ResponseEntity.status(HttpStatus.OK).body(promotionalProductsResponse);
+    }
+
+    @GetMapping("/{userId}/list/")
+    @JsonView({PostView.PromotionalSimple.class})
+    public ResponseEntity<PromoPostsBySellerIdResponse> getPromoPostsBySellerId(@PathVariable Integer userId) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(postService.getPromoPostsBySellerId(userId));
     }
 }

@@ -85,4 +85,16 @@ public class PostServiceImpl implements PostService{
         }
         throw new StandardNotFoundException("Vendedor " + userId + " nao encontrado.");
     }
+
+    @Override
+    public PromoPostsBySellerIdResponse getPromoPostsBySellerId(Integer sellerId) {
+        Seller seller = sellerService.findById(sellerId);
+        if(seller == null){
+            throw new StandardNotFoundException("Vendedor " + sellerId + " nao encontrado");
+        }
+        List<PostInfoResponse> postsInfoResponse = seller.getPosts().stream()
+                .map(this::fromModel)
+                .filter(post -> post.getHasPromo().equals(true)).collect(Collectors.toList());
+        return new PromoPostsBySellerIdResponse(seller.getId(), seller.getUserName(), postsInfoResponse);
+    }
 }
