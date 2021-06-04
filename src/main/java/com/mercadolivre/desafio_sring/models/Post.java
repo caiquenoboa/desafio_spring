@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -41,13 +42,13 @@ public class UserController {
     }
 
     @GetMapping(value = "{userId}/followers/list")
-    public ResponseEntity<UserFollowersListResponseDTO> getFollowersListUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(userService.followersListUser(userId));
+    public ResponseEntity<UserFollowersListResponseDTO> getFollowersListUser(@PathVariable Long userId, @RequestParam("order") Optional<String> sort) {
+        return ResponseEntity.ok(userService.followersListUser(userId, sort));
     }
 
     @GetMapping(value = "{userId}/followed/list")
-    public ResponseEntity<UserFollowedListResponseDTO> getFollowedListUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(userService.followedListUser(userId));
+    public ResponseEntity<UserFollowedListResponseDTO> getFollowedListUser(@PathVariable Long userId, @RequestParam("order") Optional<String> sort) {
+        return ResponseEntity.ok(userService.followedListUser(userId, sort));
     }
 
     @PostMapping(value = "/{userId}/unfollow/{userIdToUnfollow}")

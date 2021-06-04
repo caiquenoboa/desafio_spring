@@ -9,7 +9,6 @@ import java.time.LocalDate;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PostCreateResponseDTO {
-    private Long userId;
     private Long id_post;
 
     @JsonFormat(pattern = "dd-MM-uuuu")
@@ -22,8 +21,7 @@ public class PostCreateResponseDTO {
     public PostCreateResponseDTO() {
     }
 
-    public PostCreateResponseDTO(Long userId, Long id_post, LocalDate date, ProductCreateResponseDTO detail, Long category, Double price) {
-        this.userId = userId;
+    public PostCreateResponseDTO(Long id_post, LocalDate date, ProductCreateResponseDTO detail, Long category, Double price) {
         this.id_post = id_post;
         this.date = date;
         this.detail = detail;
@@ -37,14 +35,6 @@ public class PostCreateResponseDTO {
         this.category = post.getCategory();
         this.price = post.getPrice();
         this.detail = new ProductCreateResponseDTO(post.getProduct());
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public Long getId_post() {

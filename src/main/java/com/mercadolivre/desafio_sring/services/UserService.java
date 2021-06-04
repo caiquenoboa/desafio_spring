@@ -6,10 +6,12 @@ import com.mercadolivre.desafio_sring.exceptions.GeneralException;
 import com.mercadolivre.desafio_sring.exceptions.ObjectNotFoundException;
 import com.mercadolivre.desafio_sring.models.User;
 import com.mercadolivre.desafio_sring.repositories.UserRepository;
+import com.mercadolivre.desafio_sring.utils.Sorter;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -84,7 +86,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserFollowersListResponseDTO followersListUser(Long userId) {
+    public UserFollowersListResponseDTO followersListUser(Long userId, Optional<String> sort) {
         User user = userRepository
                 .findById(userId)
                 .orElseThrow(() -> new ObjectNotFoundException("User not found"));
@@ -93,8 +95,8 @@ public class UserService implements IUserService {
             throw new GeneralException("User not is a seller", HttpStatus.BAD_REQUEST.value());
         }
 
-        List<UserFollowersListUserResponseDTO> followersDTO = user
-                .getFollowers()
+        List<UserFollowersListUserResponseDTO> followersDTO = userRepository
+                .findByFollowingUserId(userId, Sorter.getSort(mapFieldSort, sort))
                 .stream()
                 .map(UserFollowersListUserResponseDTO::new)
                 .collect(Collectors.toList());
@@ -103,7 +105,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserFollowedListResponseDTO followedListUser(Long userId) {
+    public UserFollowedListResponseDTO followedListUser(Long userId, Optional<String> sort) {
         User user = userRepository
                 .findById(userId)
                 .orElseThrow(() -> new ObjectNotFoundException("User not found"));
@@ -112,8 +114,8 @@ public class UserService implements IUserService {
             throw new GeneralException("User is a seller", HttpStatus.BAD_REQUEST.value());
         }
 
-        List<UserFollowedListUserResponseDTO> followedDTO = user
-                .getFollowing()
+        List<UserFollowedListUserResponseDTO> followedDTO = userRepository
+                .findByFollowersUserId(userId, Sorter.getSort(mapFieldSort, sort))
                 .stream()
                 .map(UserFollowedListUserResponseDTO::new)
                 .collect(Collectors.toList());

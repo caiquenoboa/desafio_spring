@@ -8,12 +8,14 @@ import com.mercadolivre.desafio_sring.models.Post;
 import com.mercadolivre.desafio_sring.models.Product;
 import com.mercadolivre.desafio_sring.models.User;
 import com.mercadolivre.desafio_sring.repositories.PostRepository;
+import com.mercadolivre.desafio_sring.utils.Sorter;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,7 +48,7 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public PostGetFollowedPostsResponseDTO getFollowedPosts(Long userId) {
+    public PostGetFollowedPostsResponseDTO getFollowedPosts(Long userId, Optional<String> sort) {
         if (!userService.existsById(userId)) {
             throw new GeneralException("User not found", HttpStatus.NOT_FOUND.value());
         }
@@ -55,7 +57,8 @@ public class PostService implements IPostService {
                 .findByUserFollowersUserIdAndDateBetween(
                         userId,
                         LocalDate.now().minusDays(14),
-                        LocalDate.now()
+                        LocalDate.now(),
+                        Sorter.getSort(mapFieldSort, sort)
                 );
 
         List<PostCreateResponseDTO> postsDTO = postsResult

@@ -7,7 +7,16 @@ import com.mercadolivre.desafio_sring.dtos.userDTOs.response.UserFollowersListRe
 import com.mercadolivre.desafio_sring.dtos.userDTOs.response.UserFollowsCountResponseDTO;
 import com.mercadolivre.desafio_sring.models.User;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 public interface IUserService {
+    Map<String, String> mapFieldSort = new HashMap<>() {{
+        put("name", "userName");
+        put("default", "userName");
+    }};
+
     Boolean existsById(Long userId);
 
     User findUserById(Long userId);
@@ -18,9 +27,9 @@ public interface IUserService {
 
     UserFollowsCountResponseDTO followersCountUser(Long userId);
 
-    UserFollowersListResponseDTO followersListUser(Long userId);
+    UserFollowersListResponseDTO followersListUser(Long userId, Optional<String> order);
 
-    UserFollowedListResponseDTO followedListUser(Long userId);
+    UserFollowedListResponseDTO followedListUser(Long userId, Optional<String> order);
 
     void unfollowUser(Long userId, Long userIdToUnfollow);
 }

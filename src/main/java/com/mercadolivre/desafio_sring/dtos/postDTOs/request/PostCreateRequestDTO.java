@@ -12,20 +12,20 @@ import java.time.LocalDate;
 
 public class PostCreateRequestDTO {
     @NotNull
-    private Long userId;
+    protected Long userId;
 
     @NotNull
-    private Long category;
+    protected Long category;
 
     @NotNull
-    private Double price;
+    protected Double price;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDate date;
+    protected LocalDate date;
 
     @NotNull
     @Valid
-    private ProductCreateRequestDTO detail;
+    protected ProductCreateRequestDTO detail;
 
     public PostCreateRequestDTO() {
     }
