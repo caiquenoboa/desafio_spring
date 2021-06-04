@@ -54,8 +54,9 @@ public class UserController {
 
     @GetMapping(path = "/{userId}/followed/list")
     @JsonView(UserView.Simple.class)
-    public ResponseEntity<UserFollowedInfoResponse> getFollowed(@PathVariable Integer userId) {
-        UserFollowedInfoResponse userFollowersInfoResponse = userService.getFollowedInfo(userId);
+    public ResponseEntity<UserFollowedInfoResponse> getFollowed(@PathVariable Integer userId,
+                                                                @RequestParam(defaultValue = "asc") String order) {
+        UserFollowedInfoResponse userFollowersInfoResponse = userService.getFollowedInfo(userId, order);
         return ResponseEntity.status(HttpStatus.OK).body(userFollowersInfoResponse);
     }
 
@@ -64,5 +65,4 @@ public class UserController {
         sellerService.unfollowSeller(userId, userIdToUnfollow);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-
 }

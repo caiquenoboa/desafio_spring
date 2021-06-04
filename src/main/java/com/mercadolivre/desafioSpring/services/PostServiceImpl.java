@@ -10,7 +10,6 @@ import com.mercadolivre.desafioSpring.responses.PostInfoResponse;
 import com.mercadolivre.desafioSpring.responses.PostsBySellersFollowedResponse;
 import com.mercadolivre.desafioSpring.responses.ProductInfoResponse;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -65,9 +64,9 @@ public class PostServiceImpl implements PostService{
         List<Post> posts = new ArrayList<>();
         for (Seller seller: user.getFollowed()) {
             posts.addAll(seller.getPosts().stream().filter(post -> (LocalDate.now().compareTo(post.getDate())) < 14)
-                         .collect(Collectors.toList()));
+                    .collect(Collectors.toList()));
         }
         return new PostsBySellersFollowedResponse(userId, posts.stream()
-                                                  .map(this::fromModel).collect(Collectors.toList()));
+                .map(this::fromModel).collect(Collectors.toList()));
     }
 }

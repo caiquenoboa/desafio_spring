@@ -10,6 +10,9 @@ import com.mercadolivre.desafioSpring.responses.UserInfoResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,14 +58,24 @@ public class UserServiceImpl implements UserService{
     public User toModel(UserToCreateRequest userToCreateRequest) {
         return new User(null, userToCreateRequest.getUserName(), null);
     }
-
+    //        LocalDate today = LocalDate.now();
+//        LocalDate twoWeeksAgo = LocalDate.now().minusDays(14);
+//        Sort sortedBy = Sort.by("date").ascending();
+//        if (order.toLowerCase().strip().equals("desc")){
+//            sortedBy =  Sort.by("date").descending();
+//        }
+//        List<Post> posts = postRepository.findBySellerFollowersIdAndDateBetween(userId,twoWeeksAgo, today, sortedBy);
     @Override
-    public UserFollowedInfoResponse getFollowedInfo(Integer userId) {
+    public UserFollowedInfoResponse getFollowedInfo(Integer userId, String order) {
         User user = this.findById(userId);
         if(user != null ) {
             List<UserInfoResponse> followedInfoResponseList = user.getFollowed().stream()
-                    .map(follower -> new UserInfoResponse(follower.getId(), follower.getUserName(),false))
+                    .map(follower -> new UserInfoResponse(follower.getId(), follower.getUserName(), false))
+                    .sorted(UserInfoResponse.UserInfoResponseNameComparator)
                     .collect(Collectors.toList());
+            if(order.toLowerCase().strip().equals("name_desc")){
+                Collections.reverse(followedInfoResponseList);
+            }
             return new UserFollowedInfoResponse(user.getId(), user.getUserName(), followedInfoResponseList);
         }
         throw new StandardNotFoundException("Usuario " + userId + " nao encontrado.");

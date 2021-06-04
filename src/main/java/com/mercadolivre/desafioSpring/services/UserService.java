@@ -13,6 +13,6 @@ public interface UserService {
     void followSeller(Seller sellerToFollow, Integer userId, Integer sellerIdToFollow);
     void unfollowSeller(Seller sellerToFollow, Integer userId, Integer sellerIdToUnfollow);
     User toModel(UserToCreateRequest userToCreateRequest);
-    UserFollowedInfoResponse getFollowedInfo(Integer userId);
+    UserFollowedInfoResponse getFollowedInfo(Integer userId, String order);
     Boolean isUserValidToFollow(User user, Seller sellerToFollow, Integer userId, Integer sellerIdToFollow);
 }
