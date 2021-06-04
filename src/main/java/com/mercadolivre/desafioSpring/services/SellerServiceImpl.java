@@ -2,9 +2,7 @@ package com.mercadolivre.desafioSpring.services;
 
 import com.mercadolivre.desafioSpring.exceptions.StandardNotFoundException;
 import com.mercadolivre.desafioSpring.models.Seller;
-import com.mercadolivre.desafioSpring.models.User;
 import com.mercadolivre.desafioSpring.repositories.SellerRepository;
-import com.mercadolivre.desafioSpring.repositories.UserRepository;
 import com.mercadolivre.desafioSpring.requests.UserToCreateRequest;
 import com.mercadolivre.desafioSpring.responses.SellerFollowersInfoResponse;
 import com.mercadolivre.desafioSpring.responses.SellerFollowersResponse;
@@ -54,8 +52,8 @@ public class SellerServiceImpl implements SellerService{
     public SellerFollowersResponse getFollowersNumber(Integer sellerId) {
         Seller seller = this.findById(sellerId);
         if(seller != null ) {
-            return new SellerFollowersResponse(seller.getId(), seller.getUserName(), userService.countByFollowedId(sellerId));
-
+            return new SellerFollowersResponse(seller.getId(), seller.getUserName(),
+                                               userService.countByFollowedId(sellerId));
         }
         throw new StandardNotFoundException("Vendedor " + sellerId + " nao encontrado.");
     }

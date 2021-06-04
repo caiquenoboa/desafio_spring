@@ -17,4 +17,6 @@ public class PostToCreateRequest {
     private ProductToCreateRequest detail;
     private Integer category;
     private Double price;
+    private Boolean hasPromo = false;
+    private Double discount = 0.0;
 }

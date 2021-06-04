@@ -20,9 +20,7 @@ public class UserInfoResponse {
 
     public static Comparator<UserInfoResponse> UserInfoResponseNameComparator = new Comparator<UserInfoResponse>() {
         public int compare(UserInfoResponse user1, UserInfoResponse user2) {
-            String userName1 = user1.getUserName().toUpperCase();
-            String userName2 = user2.getUserName().toUpperCase();
-            return userName1.compareTo(userName2);
+            return user1.getUserName().toUpperCase().compareTo(user2.getUserName().toUpperCase());
         }
     };
 }

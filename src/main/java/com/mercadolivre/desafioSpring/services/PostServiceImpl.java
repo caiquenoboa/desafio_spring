@@ -9,11 +9,14 @@ import com.mercadolivre.desafioSpring.requests.PostToCreateRequest;
 import com.mercadolivre.desafioSpring.responses.PostInfoResponse;
 import com.mercadolivre.desafioSpring.responses.PostsBySellersFollowedResponse;
 import com.mercadolivre.desafioSpring.responses.ProductInfoResponse;
+import com.mercadolivre.desafioSpring.responses.UserInfoResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,22 +40,22 @@ public class PostServiceImpl implements PostService{
         }
         return new Post(null, seller, postToCreateRequest.getDate(),
                 productService.findById(productInfoResponse.getProduct_id()),
-                postToCreateRequest.getCategory(), postToCreateRequest.getPrice());
+                postToCreateRequest.getCategory(), postToCreateRequest.getPrice(),
+                postToCreateRequest.getHasPromo(), postToCreateRequest.getDiscount());
     }
 
     @Override
     public PostInfoResponse fromModel(Post post) {
         ProductInfoResponse productInfoResponse = productService.fromModel(post.getProduct());
         return new PostInfoResponse(post.getSeller().getId(), post.getId(), post.getDate(),
-                productInfoResponse, post.getCategory(), post.getPrice());
+                productInfoResponse, post.getCategory(), post.getPrice(), post.getHasPromo(), post.getDiscount());
     }
 
     @Override
     public PostInfoResponse createPost(PostToCreateRequest postToCreateRequest) {
         ProductInfoResponse productInfoResponse = productService.createProduct(postToCreateRequest.getDetail());
         Post post = postRepository.save(this.toModel(postToCreateRequest, productInfoResponse));
-        return new PostInfoResponse(post.getId(), post.getSeller().getId(), post.getDate(),
-                productInfoResponse, post.getCategory(), post.getPrice());
+        return this.fromModel(post);
     }
 
     @Override
@@ -61,12 +64,17 @@ public class PostServiceImpl implements PostService{
         if(user == null){
             throw new StandardNotFoundException("Usuario " + userId + " nao encontrado");
         }
-        List<Post> posts = new ArrayList<>();
+        List<PostInfoResponse> postsInfoResponse = new ArrayList<>();
         for (Seller seller: user.getFollowed()) {
-            posts.addAll(seller.getPosts().stream().filter(post -> (LocalDate.now().compareTo(post.getDate())) < 14)
+            postsInfoResponse.addAll(seller.getPosts().stream()
+                    .map(this::fromModel)
+                    .filter(post -> LocalDate.now().minusDays(14).isBefore(post.getDate()))
                     .collect(Collectors.toList()));
         }
-        return new PostsBySellersFollowedResponse(userId, posts.stream()
-                .map(this::fromModel).collect(Collectors.toList()));
+        postsInfoResponse.sort(PostInfoResponse.PostInfoResponseNameComparator);
+        if(order.toLowerCase().strip().equals("name_desc")){
+            Collections.reverse(postsInfoResponse);
+        }
+        return new PostsBySellersFollowedResponse(userId, postsInfoResponse);
     }
 }
