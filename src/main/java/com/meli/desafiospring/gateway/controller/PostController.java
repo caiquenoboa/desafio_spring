@@ -1,14 +1,12 @@
 package com.meli.desafiospring.gateway.controller;
 
 import com.meli.desafiospring.gateway.request.PostRequest;
+import com.meli.desafiospring.gateway.response.UserResponse;
 import com.meli.desafiospring.service.post.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -25,5 +23,12 @@ public class PostController {
         postService.createPost(postRequest);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/followed/{userId}/list")
+    public ResponseEntity<UserResponse> getPostsOfSellersFollowed(@PathVariable Integer userId){
+        UserResponse userResponse = postService.getPostsOfSellersFollowed(userId);
+
+        return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 }

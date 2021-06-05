@@ -1,14 +1,18 @@
 package com.meli.desafiospring.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+//@Data
+@Getter
+@Setter
 @Entity
 public class Detail {
 
@@ -24,5 +28,6 @@ public class Detail {
     private String notes;
 
     @OneToOne(mappedBy = "detail")
+    @JsonIgnore
     private Post post;
 }

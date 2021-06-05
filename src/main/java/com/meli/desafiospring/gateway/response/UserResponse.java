@@ -30,10 +30,21 @@ public class UserResponse {
         this.userName = userName;
     }
 
+    public UserResponse(Integer userId, List<PostResponse> posts){
+        this.userId = userId;
+        this.posts = posts;
+    }
+
+    public UserResponse(Integer userId) {
+        this.userId = userId;
+    }
 
     private Integer userId;
     private String userName;
     private Integer followersCount;
     private List<UserResponse> followers;
+
     private List<UserResponse> followed;
+
+    private List<PostResponse> posts;
 }

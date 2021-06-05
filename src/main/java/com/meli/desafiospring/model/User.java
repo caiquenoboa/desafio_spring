@@ -1,16 +1,20 @@
 package com.meli.desafiospring.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.meli.desafiospring.enums.UserType;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+//@Data
+@Getter
+@Setter
 @Entity
 public class User {
 
@@ -32,6 +36,7 @@ public class User {
     private UserType userType;
 
     @OneToMany(mappedBy="user", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Post> posts;
 
     public void addUserFollower(User user){
@@ -43,4 +48,6 @@ public class User {
     public boolean isUserTypeClient(){
         return this.userType.equals(UserType.CLIENT);
     }
+
+
 }
