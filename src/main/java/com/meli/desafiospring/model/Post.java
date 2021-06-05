@@ -37,6 +37,9 @@ public class Post {
     private int category;
     private double price;
 
+    private Boolean hasPromo;
+    private Double discount;
+
     public Post(Detail detail, User user) {
         this.detail = detail;
         this.user = user;

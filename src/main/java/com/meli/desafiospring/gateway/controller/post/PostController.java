@@ -1,4 +1,4 @@
-package com.meli.desafiospring.gateway.controller;
+package com.meli.desafiospring.gateway.controller.post;
 
 import com.meli.desafiospring.gateway.request.PostRequest;
 import com.meli.desafiospring.gateway.response.UserResponse;

@@ -1,5 +1,6 @@
 package com.meli.desafiospring.gateway.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.meli.desafiospring.config.LocalDateDeserializer;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PostResponse {
 
     public PostResponse(DetailResponse detailResponse) {
@@ -28,4 +30,8 @@ public class PostResponse {
     private int category;
 
     private double price;
+
+    private Boolean hasPromo;
+
+    private Double discount;
 }

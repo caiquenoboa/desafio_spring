@@ -29,4 +29,7 @@ public class PostRequest {
 
     private int category;
     private double price;
+
+    private Boolean hasPromo;
+    private Double discount;
 }
