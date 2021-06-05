@@ -15,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,10 +40,8 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public UserResponse getPostsOfSellersFollowed(Integer userId) {
+    public UserResponse getPostsOfSellersFollowed(Integer userId, String order) {
         User user = this.userByIdService.getUserByIdService(userId);
-
-        System.out.println(user.toString());
 
         List<Integer> usersIdsFollowed = getAllFollowedService.getAllById(user.getId())
                                                                 .stream()
@@ -51,10 +50,10 @@ public class PostService {
 
         List<Post> posts = postByIdsUserService.getAllPostByIdsUser(usersIdsFollowed);
 
-        return mountResponse(posts, userId);
+        return mountResponse(posts, userId, order);
     }
 
-    private UserResponse mountResponse(List<Post> posts, Integer userId) {
+    private UserResponse mountResponse(List<Post> posts, Integer userId, String order) {
         List<PostResponse> postResponseList = new ArrayList<>();
 
         posts.forEach(p -> {
@@ -70,6 +69,13 @@ public class PostService {
             postResponseList.add(postResponse);
 
         });
+
+        if(order.equals("date_asc")){
+            postResponseList
+                    .sort(Comparator.comparing(PostResponse::getDate)); //TODO Usar generics na classe util do OrderUserResponseUtil ??
+        }else{
+            postResponseList.sort(Comparator.comparing(PostResponse::getDate).reversed());
+        }
 
         return new UserResponse(userId, postResponseList);
     }
