@@ -50,14 +50,15 @@ public class UserController {
 
     @GetMapping(value = "/{userId}/followers/count/")
     public ResponseEntity<UserResponse> getFollowersCountOfUser(@PathVariable Integer userId){
-        UserResponse userResponse = followersCountService.getFollowers(userId,true);
+        UserResponse userResponse = followersCountService.getFollowers(userId,true, null);
 
         return ResponseEntity.ok(userResponse);
     }
 
     @GetMapping(value = "/{userId}/followers/list")
-    public ResponseEntity<UserResponse> getAllFollowerOfUser(@PathVariable Integer userId){
-        UserResponse userResponse = followersCountService.getFollowers(userId, false);
+    public ResponseEntity<UserResponse> getAllFollowerOfUser(@PathVariable Integer userId,
+                                               @RequestParam(name = "order", defaultValue = "name_asc") String order){
+        UserResponse userResponse = followersCountService.getFollowers(userId, false, order);
 
         return ResponseEntity.ok(userResponse);
     }

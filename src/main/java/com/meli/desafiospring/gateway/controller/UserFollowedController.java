@@ -4,10 +4,7 @@ import com.meli.desafiospring.gateway.response.UserResponse;
 import com.meli.desafiospring.service.user.followed.FollowedService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -17,8 +14,9 @@ public class UserFollowedController {
     private final FollowedService followedService;
 
     @GetMapping(value = "/{userId}/followed/list")
-    public ResponseEntity<UserResponse> getAllFollowerOfUser(@PathVariable Integer userId){
-        UserResponse userResponse = followedService.getAllFollowed(userId);
+    public ResponseEntity<UserResponse> getAllFollowerOfUser(@PathVariable Integer userId,
+                                             @RequestParam(name = "order", defaultValue = "name_asc") String order){
+        UserResponse userResponse = followedService.getAllFollowed(userId, order);
 
         return ResponseEntity.ok(userResponse);
     }

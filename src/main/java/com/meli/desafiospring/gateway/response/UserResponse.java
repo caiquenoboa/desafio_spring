@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserResponse {
+public class UserResponse implements Comparable< UserResponse >{
 
     public UserResponse(Integer userId, String userName, Integer followersCount) {
         this.userId = userId;
@@ -47,4 +47,9 @@ public class UserResponse {
     private List<UserResponse> followed;
 
     private List<PostResponse> posts;
+
+    @Override
+    public int compareTo(UserResponse o) {
+        return this.userName.compareTo(o.getUserName());
+    }
 }
