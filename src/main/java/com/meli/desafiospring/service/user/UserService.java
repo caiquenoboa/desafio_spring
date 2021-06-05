@@ -1,6 +1,7 @@
 package com.meli.desafiospring.service.user;
 
 import com.meli.desafiospring.exception.user.ClientCannotFollowSellerException;
+import com.meli.desafiospring.exception.user.RelationshipAlreadyExistException;
 import com.meli.desafiospring.gateway.repository.UserRepository;
 import com.meli.desafiospring.model.User;
 import com.meli.desafiospring.validator.user.UserValidator;
@@ -21,10 +22,15 @@ public class UserService {
         User userActual = userByIdService.getUserByIdService(userId);
         User userToFollow = userByIdService.getUserByIdService(userIdToFollow);
 
-        userValidator.validIfHasRelationshipBetweenUsers(userIdToFollow, userId);
-
         if(userActual.isUserTypeClient()){
             throw new ClientCannotFollowSellerException("Client cannot follow Seller");
+        }
+
+        boolean hasRelationship = userValidator.validIfHasRelationshipBetweenUsers(userIdToFollow, userId);
+
+        if(hasRelationship){
+            throw new RelationshipAlreadyExistException(
+                    String.format("Usuário %s já segue o usuário %s ", userIdToFollow, userId));
         }
 
         userToFollow.addUserFollower(userActual);
