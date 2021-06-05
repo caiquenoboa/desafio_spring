@@ -1,8 +1,8 @@
 package com.meli.desafiospring.service.post;
 
+import com.meli.desafiospring.builder.PostResponseBuilder;
 import com.meli.desafiospring.gateway.repository.PostRepository;
 import com.meli.desafiospring.gateway.request.PostRequest;
-import com.meli.desafiospring.gateway.response.DetailResponse;
 import com.meli.desafiospring.gateway.response.PostResponse;
 import com.meli.desafiospring.gateway.response.UserResponse;
 import com.meli.desafiospring.model.Detail;
@@ -56,19 +56,7 @@ public class PostService {
     private UserResponse mountResponse(List<Post> posts, Integer userId, String order) {
         List<PostResponse> postResponseList = new ArrayList<>();
 
-        posts.forEach(p -> {
-            DetailResponse detailResponse = new DetailResponse();
-            PostResponse postResponse = new PostResponse(detailResponse);
-
-            BeanUtils.copyProperties(p.getDetail(), detailResponse);
-            BeanUtils.copyProperties(p, postResponse);
-
-            detailResponse.setProductId(p.getDetail().getId());
-            postResponse.setIdPost(p.getId());
-
-            postResponseList.add(postResponse);
-
-        });
+        posts.forEach(p -> postResponseList.add( PostResponseBuilder.builder(p) ));
 
         if(order.equals("date_asc")){
             postResponseList
@@ -79,4 +67,5 @@ public class PostService {
 
         return new UserResponse(userId, postResponseList);
     }
+
 }

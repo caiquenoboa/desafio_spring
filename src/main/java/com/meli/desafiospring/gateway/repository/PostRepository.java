@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository<Post, Integer> {
 
     Optional<List<Post>> findAllByUserIdInAndDateGreaterThan(List<Integer> idsUser, LocalDate dateBefore15Days);
+
+    Optional<List<Post>> findAllByUserIdAndHasPromoTrue(Integer userId);
 }

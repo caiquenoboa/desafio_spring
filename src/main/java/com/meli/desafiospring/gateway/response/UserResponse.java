@@ -13,6 +13,13 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserResponse implements Comparable< UserResponse >{
 
+    private Integer userId;
+    private String userName;
+    private Integer followersCount;
+    private List<UserResponse> followers;
+    private List<UserResponse> followed;
+    private List<PostResponse> posts;
+
     public UserResponse(Integer userId, String userName, Integer followersCount) {
         this.userId = userId;
         this.userName = userName;
@@ -38,15 +45,6 @@ public class UserResponse implements Comparable< UserResponse >{
     public UserResponse(Integer userId) {
         this.userId = userId;
     }
-
-    private Integer userId;
-    private String userName;
-    private Integer followersCount;
-    private List<UserResponse> followers;
-
-    private List<UserResponse> followed;
-
-    private List<PostResponse> posts;
 
     @Override
     public int compareTo(UserResponse o) {
