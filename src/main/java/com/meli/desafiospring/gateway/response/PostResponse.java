@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class PostResponse {
+public class PostResponse implements Comparable<PostResponse> {
 
     public PostResponse(DetailResponse detailResponse) {
         this.detail = detailResponse;
@@ -34,4 +34,9 @@ public class PostResponse {
     private Boolean hasPromo;
 
     private Double discount;
+
+    @Override
+    public int compareTo(PostResponse response) {
+        return this.date.compareTo(response.getDate());
+    }
 }
