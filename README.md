@@ -49,3 +49,16 @@ US 0009 | ✅
 US 0010 | ✅
 US 0011 | ✅
 US 0012 | ✅
+
+## Testes automatizados
+Para trazer uma experiência mais próxima do dia a dia, alguns testes de integração foram adicionados ao projeto.
+
+Os seguintes requisitos estão com os testes escritos:
+
+Requisito | Teste escrito
+--- | ---
+US 0001 | ✅
+US 0002 | ✅
+US 0003 | ✅
+US 0004 | ✅
+US 0005 | ✅

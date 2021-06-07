@@ -7,7 +7,12 @@ import java.util.Optional;
 
 public abstract class Sorter {
     public static Sort getSort(Map<String, String> mapFieldSort, Optional<String> stringSort) {
-        Sort defaultSort = Sort.by(Sort.Direction.ASC, mapFieldSort.get("default"));
+        Sort.Direction defaultOrder =
+                mapFieldSort.get("default_order") != null && mapFieldSort.get("default_order").equals("desc")
+                ? Sort.Direction.DESC
+                : Sort.Direction.ASC;
+
+        Sort defaultSort = Sort.by(defaultOrder, mapFieldSort.get("default_field"));
 
         if (stringSort.isEmpty()) return defaultSort;
 

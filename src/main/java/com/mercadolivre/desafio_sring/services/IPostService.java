@@ -11,7 +11,8 @@ import java.util.Optional;
 public interface IPostService {
     Map<String, String> mapFieldSort = new HashMap<>() {{
         put("date", "date");
-        put("default", "date");
+        put("default_field", "date");
+        put("default_order", "desc");
     }};
 
     PostCreateResponseDTO createPost(PostCreateRequestDTO postCreateRequestDTO);

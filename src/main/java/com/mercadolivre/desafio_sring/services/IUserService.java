@@ -14,7 +14,8 @@ import java.util.Optional;
 public interface IUserService {
     Map<String, String> mapFieldSort = new HashMap<>() {{
         put("name", "userName");
-        put("default", "userName");
+        put("default_field", "userName");
+        put("default_order", "asc");
     }};
 
     Boolean existsById(Long userId);
