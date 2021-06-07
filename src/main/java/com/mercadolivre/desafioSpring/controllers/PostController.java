@@ -38,7 +38,7 @@ public class PostController {
     @JsonView(UserView.Simple.class)
     public ResponseEntity<PostsBySellersFollowedResponse> getPostsBySellerFollowed(@PathVariable Integer userId,
                                                                                    @RequestParam(defaultValue
-                                                                                           = "date_asc") String order) {
+                                                                                           = "date_desc") String order) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(postService.getAllLastPostsBySellersFollowed(userId, order));
     }
