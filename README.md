@@ -21,6 +21,7 @@ Para executar a API, basta executar o projeto no IntelliJ e testar os endpoints 
 * **US0011 -** Listar a quantidade de publicações promocionais de um vendedor ( /products/{userId}/countPromo/ );
 * **US0012 -** Listar produtos promocionais de um vendedor ( /products/{userId}/list/ ).
 
+
 ## Documentação (Swagger)
 
 A documentação da API criada através do Swagger pode ser acessada em:
@@ -28,10 +29,27 @@ A documentação da API criada através do Swagger pode ser acessada em:
 http://localhost:8080/swagger-ui.html
 ```
 
+
 ## Testes (Postman)
 
 Alguns testes foram criados no postman e podem ser importados à partir do arquivo localizado em 
 *src/main/resources/testes.postman_collection.json*
+
+
+## Informações adicionais
+
+* O projeto foi desenvolvido utilizando lombok (esta ferramenta fornece anotaçōes para evitar a necessidade de
+  implementar getters, setters e construtores);
+* Para usuário e vendedor, foi implementado o conceito de herança, por possuírem atributos e comportamentos distintos;
+* **Especificamente para o problema fornecido**, os produtos promocionais foram implementados apenas com uma flag
+  *hasPromo* e um atributo *discount*;
+* Os atributos *post_id* e *product_id* não precisam ser informados para cadastrar uma publicação (US0005), visto que
+  o banco ficará responsável por gerenciar os id`s;
+* Foram implementadas exceçōes caso o um usuário tente seguir ele mesmo, caso um usuário ou vendedor tente seguir outro
+  usuário, caso um usuário tente seguir alguem que já está seguindo, caso um usuário tente deixar de seguir alguem que
+  ele não segue, caso uma publicação promocional tenha hasPromo como false ou desconto igual a 0, ou caso uma publicação
+  normal tenha hasPromo como true ou tenha algum valor de desconto;
+
 
 ## Tabelas do banco de dados
 
@@ -47,9 +65,10 @@ As credenciais a serem utilizadas são:
 
 <h3>Tabelas com os dados já cadastrados</h3>
 
-**OBS:** Vale ressaltar que a tabela seller é composta por apenas uma coluna com os id`s de quem é vendedor 
-(por isso ela não será demonstrada aqui). Ela seria mais útil caso o vendedor tivesse mais características distintas, 
-se comparado a um usuário. Além disso, foi admitido que um post possui um único produto.
+**OBS:** Vale ressaltar que a tabela SELLER é composta por apenas uma coluna com os id`s de quem é vendedor 
+(por isso ela não será demonstrada aqui) e de acordo com os dados já cadastrados no banco, Joao e Lindiberg 
+são usuários e Paula e Fernanda são vendedoras. A tabela SELLER seria mais útil caso o vendedor tivesse mais 
+características distintas, se comparado à um usuário. Além disso, foi admitido que um post possui um único produto.
 
 **Tabela USER**
 
@@ -91,16 +110,3 @@ ID | USER_NAME |
 3 | 4
 1 | 3
 1 | 4
-
-## Informações adicionais
-* O projeto foi desenvolvido utilizando lombok (esta ferramenta fornece anotaçōes para evitar a necessidade de 
-  implementar getters, setters e construtores);
-* Para usuário e vendedor, foi implementado o conceito de herança, por possuírem atributos e comportamentos distintos;
-* **Especificamente para o problema fornecido**, os produtos promocionais foram implementados apenas com uma flag 
-  hasPromo;
-* Os atributos *post_id* e *product_id* não precisam ser informados para cadastrar uma publicação (US0005), visto que 
-o banco ficará responsável por gerenciar os id`s;
-* Foram implementadas exceçōes caso o um usuário tente seguir ele mesmo, caso um usuário ou vendedor tente seguir outro 
-  usuário, caso um usuário tente seguir alguem que já está seguindo, caso um usuário tente deixar de seguir alguem que 
-  ele não segue, caso uma publicação promocional tenha hasPromo como false ou desconto igual a 0, ou caso uma publicação 
-  normal tenha hasPromo como true ou tenha algum valor de desconto;
