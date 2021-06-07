@@ -2,7 +2,6 @@ package com.meli.desafiospring.service.user.followed;
 
 import com.meli.desafiospring.gateway.repository.UserRepository;
 import com.meli.desafiospring.model.User;
-import com.meli.desafiospring.service.user.followed.abstracts.AbstractFollowerService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
