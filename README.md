@@ -33,7 +33,7 @@ http://localhost:8080/swagger-ui.html
 ## Testes (Postman)
 
 A coleção de testes criada no postman, pode ser importada na ferramenta à partir do arquivo localizado em 
-"*src/main/resources/testes.postman_collection.json*"
+"*src/main/resources/testes.postman_collection.json*".
 
 
 ## Informações adicionais
