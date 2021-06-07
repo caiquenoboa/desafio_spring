@@ -27,7 +27,7 @@ public class DateUtil {
     public static Date convertStringToDate(String sDate){
         Date date = null;
         try {
-            date = Date.from(LocalDate.parse(sDate, DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT)).atStartOfDay(ZoneId.systemDefault()).toInstant());
+            date = Date.from(LocalDate.parse(sDate, DateTimeFormatter.ofPattern("dd-MM-uuuu").withResolverStyle(ResolverStyle.STRICT)).atStartOfDay(ZoneId.systemDefault()).toInstant());
         } catch (Exception e) {
             throw new RuntimeException("Formato de data não permitida");
         }

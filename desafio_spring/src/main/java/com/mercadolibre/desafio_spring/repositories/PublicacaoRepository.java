@@ -20,14 +20,14 @@ public class PublicacaoRepository {
 
     public Publicacao findById(int publicacaoId){
         return findAll().stream()
-                .filter(publicacao -> publicacao.getId_post() == publicacaoId)
+                .filter(publicacao -> publicacao.getIdPost() == publicacaoId)
                 .findFirst()
                 .orElseThrow(() -> new PublicacaoNotFoundException("Publicacao não encontrada"));
     }
 
     public void update(Publicacao publicacao){
         setAll(findAll().stream()
-                .map(publicacao1 -> publicacao.getId_post() == publicacao1.getUserId() ? publicacao : publicacao1)
+                .map(publicacao1 -> publicacao.getIdPost() == publicacao1.getUserId() ? publicacao : publicacao1)
                 .collect(Collectors.toList()));
     }
 

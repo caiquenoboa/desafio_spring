@@ -1,7 +1,12 @@
 package com.mercadolibre.desafio_spring.models;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class Produto {
-    private int product_id;
+    @NotNull
+    private Integer product_id;
+    @NotBlank
     private String productName;
     private String type;
     private String brand;
@@ -11,7 +16,7 @@ public class Produto {
     public Produto() {
     }
 
-    public Produto(int product_id, String productName, String type, String brand, String color, String notes) {
+    public Produto(Integer product_id, String productName, String type, String brand, String color, String notes) {
         this.product_id = product_id;
         this.productName = productName;
         this.type = type;
@@ -20,11 +25,11 @@ public class Produto {
         this.notes = notes;
     }
 
-    public int getProduct_id() {
+    public Integer getProduct_id() {
         return product_id;
     }
 
-    public void setProduct_id(int product_id) {
+    public void setProduct_id(Integer product_id) {
         this.product_id = product_id;
     }
 

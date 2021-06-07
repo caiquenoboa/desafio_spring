@@ -40,7 +40,7 @@ public class UsuarioController {
     //(quem me segue?)
     // US 0008
     @GetMapping("/{userId}/followers/list")
-    public ResponseEntity getFollowersList(@PathVariable int userId, @RequestParam("order") Optional<String> order){
+    public ResponseEntity getFollowersList(@PathVariable int userId, @RequestParam(defaultValue = "name_asc") Optional<String> order){
         return ResponseEntity.ok(vendedorService.getFollowersList(userId, order));
     }
 
@@ -48,7 +48,7 @@ public class UsuarioController {
     //(quem estou seguindo?)
     // US0008
     @GetMapping("/{userId}/followed/list")
-    public ResponseEntity<Usuario> getFollowedList(@PathVariable int userId, @RequestParam("order") Optional<String> order){
+    public ResponseEntity<Usuario> getFollowedList(@PathVariable int userId, @RequestParam(defaultValue = "name_asc") Optional<String> order){
         return ResponseEntity.ok(usuarioService.getFollowedList(userId, order));
     }
 

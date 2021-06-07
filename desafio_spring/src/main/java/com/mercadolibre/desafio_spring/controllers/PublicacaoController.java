@@ -3,8 +3,10 @@ package com.mercadolibre.desafio_spring.controllers;
 import com.mercadolibre.desafio_spring.models.Publicacao;
 import com.mercadolibre.desafio_spring.services.PublicacaoService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +22,7 @@ public class PublicacaoController {
 
     //US0005 - Cadastrar uma nova publicação
     @PostMapping("/newpost")
-    public ResponseEntity cadastrarPublicacao(@RequestBody Publicacao publicacao) {
+    public ResponseEntity cadastrarPublicacao(@RequestBody @Valid Publicacao publicacao) {
         publicacaoService.createPublicacao(publicacao);
         return ResponseEntity.ok().build();
     }
@@ -30,7 +32,7 @@ public class PublicacaoController {
     //publicações recentes primeiro).
     //US0009
     @GetMapping("/followed/{userId}/list")
-    public ResponseEntity<List<Publicacao>> getListPublicacoes(@PathVariable int userId, @RequestParam("order") Optional<String> order){
+    public ResponseEntity<List<Publicacao>> getListPublicacoes(@PathVariable int userId, @RequestParam(defaultValue = "date_desc") Optional<String> order){
 
         return ResponseEntity.ok(publicacaoService.getPublicacoesList(userId, order));
     }

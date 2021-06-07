@@ -1,13 +1,18 @@
 package com.mercadolibre.desafio_spring.models;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mercadolibre.desafio_spring.utils.DateUtil;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class Publicacao implements Comparable<Publicacao> {
-    private int userId;
-    private int id_post;
+    @NotNull
+    private Integer userId;
+    @NotNull
+    @JsonProperty ("id_post")
+    private Integer idPost;
     private String date;
     private Produto detail;
     private int category;
@@ -18,9 +23,9 @@ public class Publicacao implements Comparable<Publicacao> {
     public Publicacao() {
     }
 
-    public Publicacao(int userId, int id_post, String date, Produto detail, int category, double price, boolean hasPromo, double discount) {
+    public Publicacao(Integer userId, Integer id_post, String date, Produto detail, int category, double price, boolean hasPromo, double discount) {
         this.userId = userId;
-        this.id_post = id_post;
+        this.idPost = id_post;
         this.date = date;
         this.detail = detail;
         this.category = category;
@@ -29,20 +34,20 @@ public class Publicacao implements Comparable<Publicacao> {
         this.discount = discount;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public int getId_post() {
-        return id_post;
+    public Integer getIdPost() {
+        return idPost;
     }
 
-    public void setId_post(int id_post) {
-        this.id_post = id_post;
+    public void setIdPost(Integer idPost) {
+        this.idPost = idPost;
     }
 
     public String getDate() {
