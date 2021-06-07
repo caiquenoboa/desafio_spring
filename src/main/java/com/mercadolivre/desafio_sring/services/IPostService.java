@@ -6,7 +6,6 @@ import com.mercadolivre.desafio_sring.dtos.postDTOs.response.PostGetFollowedPost
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public interface IPostService {
     Map<String, String> mapFieldSort = new HashMap<>() {{
@@ -17,5 +16,5 @@ public interface IPostService {
 
     PostCreateResponseDTO createPost(PostCreateRequestDTO postCreateRequestDTO);
 
-    PostGetFollowedPostsResponseDTO getFollowedPosts(Long userId, Optional<String> order);
+    PostGetFollowedPostsResponseDTO getFollowedPosts(Long userId, String order);
 }

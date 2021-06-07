@@ -3,10 +3,9 @@ package com.mercadolivre.desafio_sring.utils;
 import org.springframework.data.domain.Sort;
 
 import java.util.Map;
-import java.util.Optional;
 
 public abstract class Sorter {
-    public static Sort getSort(Map<String, String> mapFieldSort, Optional<String> stringSort) {
+    public static Sort getSort(Map<String, String> mapFieldSort, String stringSort) {
         Sort.Direction defaultOrder =
                 mapFieldSort.get("default_order") != null && mapFieldSort.get("default_order").equals("desc")
                 ? Sort.Direction.DESC
@@ -16,7 +15,7 @@ public abstract class Sorter {
 
         if (stringSort.isEmpty()) return defaultSort;
 
-        String[] stringSplited = stringSort.get().split("_");
+        String[] stringSplited = stringSort.split("_");
 
         if (stringSplited.length != 2) return defaultSort;
 

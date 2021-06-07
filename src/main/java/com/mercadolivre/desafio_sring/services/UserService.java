@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -82,7 +81,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserFollowersListResponseDTO followersListUser(Long userId, Optional<String> sort) {
+    public UserFollowersListResponseDTO followersListUser(Long userId, String sort) {
         User user = userRepository
                 .findById(userId)
                 .orElseThrow(() -> new ObjectNotFoundException("User not found"));
@@ -101,7 +100,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserFollowedListResponseDTO followedListUser(Long userId, Optional<String> sort) {
+    public UserFollowedListResponseDTO followedListUser(Long userId, String sort) {
         User user = userRepository
                 .findById(userId)
                 .orElseThrow(() -> new ObjectNotFoundException("User not found"));

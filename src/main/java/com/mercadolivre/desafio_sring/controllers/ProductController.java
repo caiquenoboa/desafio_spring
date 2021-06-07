@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/products")
@@ -36,7 +35,7 @@ public class ProductController {
     }
 
     @GetMapping(value = "/followed/{userId}/list")
-    public ResponseEntity<PostGetFollowedPostsResponseDTO> getProductsFollowed(@PathVariable Long userId, @RequestParam("order") Optional<String> sort) {
+    public ResponseEntity<PostGetFollowedPostsResponseDTO> getProductsFollowed(@PathVariable Long userId, @RequestParam(value = "order", defaultValue = "") String sort) {
         return ResponseEntity.ok(postService.getFollowedPosts(userId, sort));
     }
 

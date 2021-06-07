@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,7 +47,7 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public PostGetFollowedPostsResponseDTO getFollowedPosts(Long userId, Optional<String> sort) {
+    public PostGetFollowedPostsResponseDTO getFollowedPosts(Long userId, String sort) {
         if (!userService.existsById(userId)) {
             throw new GeneralException("User not found", HttpStatus.NOT_FOUND.value());
         }

@@ -9,7 +9,6 @@ import com.mercadolivre.desafio_sring.models.User;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public interface IUserService {
     Map<String, String> mapFieldSort = new HashMap<>() {{
@@ -28,9 +27,9 @@ public interface IUserService {
 
     UserFollowsCountResponseDTO followersCountUser(Long userId);
 
-    UserFollowersListResponseDTO followersListUser(Long userId, Optional<String> order);
+    UserFollowersListResponseDTO followersListUser(Long userId, String order);
 
-    UserFollowedListResponseDTO followedListUser(Long userId, Optional<String> order);
+    UserFollowedListResponseDTO followedListUser(Long userId, String order);
 
     void unfollowUser(Long userId, Long userIdToUnfollow);
 }

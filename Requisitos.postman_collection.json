@@ -256,7 +256,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/products/followed/1/list?order=date_desc",
+					"raw": "http://localhost:8080/products/followed/1/list?order=date_asc",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -271,7 +271,7 @@
 					"query": [
 						{
 							"key": "order",
-							"value": "date_desc"
+							"value": "date_asc"
 						}
 					]
 				}
