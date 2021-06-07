@@ -1,0 +1,3 @@
+2021-06-07 16:58:58 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE *[*] FROM POST WHERE ID = 9"; expected "identifier"; SQL statement:
+DELETE * FROM POST WHERE ID = 9 [42001-200]

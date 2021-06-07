@@ -5,6 +5,7 @@ import com.mercadolivre.desafioSpring.models.Seller;
 import com.mercadolivre.desafioSpring.models.User;
 import com.mercadolivre.desafioSpring.repositories.PostRepository;
 import com.mercadolivre.desafioSpring.requests.PostToCreateRequest;
+import com.mercadolivre.desafioSpring.requests.PromoPostToCreateRequest;
 import com.mercadolivre.desafioSpring.responses.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,22 +26,22 @@ public class PostServiceImpl implements PostService{
     private final UserService userService;
 
     @Override
-    public PostInfoResponse createPost(PostToCreateRequest postToCreateRequest) {
-        ProductInfoResponse productInfoResponse = productService.createProduct(postToCreateRequest.getDetail());
-        Post post = postRepository.save(this.toModel(postToCreateRequest, productInfoResponse));
+    public PostInfoResponse createPost(PromoPostToCreateRequest promoPostToCreateRequest) {
+        ProductInfoResponse productInfoResponse = productService.createProduct(promoPostToCreateRequest.getDetail());
+        Post post = postRepository.save(this.toModel(promoPostToCreateRequest, productInfoResponse));
         return this.fromModel(post);
     }
 
     @Override
-    public Post toModel(PostToCreateRequest postToCreateRequest, ProductInfoResponse productInfoResponse) {
-        Seller seller = sellerService.validateSeller(postToCreateRequest.getUserId());
-        if(postToCreateRequest.getDate() == null){
-            postToCreateRequest.setDate(LocalDate.now());
+    public Post toModel(PromoPostToCreateRequest promoPostToCreateRequest, ProductInfoResponse productInfoResponse) {
+        Seller seller = sellerService.validateSeller(promoPostToCreateRequest.getUserId());
+        if(promoPostToCreateRequest.getDate() == null){
+            promoPostToCreateRequest.setDate(LocalDate.now());
         }
-        return new Post(null, seller, postToCreateRequest.getDate(),
+        return new Post(null, seller, promoPostToCreateRequest.getDate(),
                 productService.findById(productInfoResponse.getProduct_id()),
-                postToCreateRequest.getCategory(), postToCreateRequest.getPrice(),
-                postToCreateRequest.getHasPromo(), postToCreateRequest.getDiscount());
+                promoPostToCreateRequest.getCategory(), promoPostToCreateRequest.getPrice(),
+                promoPostToCreateRequest.getHasPromo(), promoPostToCreateRequest.getDiscount());
     }
 
     @Override

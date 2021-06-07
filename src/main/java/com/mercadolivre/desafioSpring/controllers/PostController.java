@@ -3,6 +3,7 @@ package com.mercadolivre.desafioSpring.controllers;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.mercadolivre.desafioSpring.exceptions.StandardNotFoundException;
 import com.mercadolivre.desafioSpring.requests.PostToCreateRequest;
+import com.mercadolivre.desafioSpring.requests.PromoPostToCreateRequest;
 import com.mercadolivre.desafioSpring.responses.*;
 import com.mercadolivre.desafioSpring.services.PostService;
 import com.mercadolivre.desafioSpring.views.PostView;
@@ -28,11 +29,9 @@ public class PostController {
 
     @PostMapping("/newpost")
     public ResponseEntity<PostInfoResponse> createPost(@RequestBody @Valid PostToCreateRequest postToCreateRequest) {
-        if(postToCreateRequest.getHasPromo().equals(true) || !postToCreateRequest.getDiscount().equals(0.0)){
-            throw new StandardNotFoundException("Este produto nao pode ser promocional e nao deve ter desconto " +
-                                                "(endpoint incorreto para esta funcionalidade).");
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).body(postService.createPost(postToCreateRequest));
+        PromoPostToCreateRequest promoPostToCreateRequest = new PromoPostToCreateRequest(postToCreateRequest,
+                                                                                false, 0.0);
+        return ResponseEntity.status(HttpStatus.CREATED).body(postService.createPost(promoPostToCreateRequest));
     }
 
     @GetMapping("/followed/{userId}/list")
@@ -47,12 +46,12 @@ public class PostController {
     @PostMapping("/newpromopost")
     @JsonView(PostView.PromotionalDetailed.class)
     public ResponseEntity<PostInfoResponse> createPromotionalPost
-            (@RequestBody @Valid PostToCreateRequest postToCreateRequest) {
-        if(postToCreateRequest.getHasPromo().equals(false) || postToCreateRequest.getDiscount().equals(0.0)){
+            (@RequestBody @Valid PromoPostToCreateRequest promoPostToCreateRequest) {
+        if(promoPostToCreateRequest.getHasPromo().equals(false) || promoPostToCreateRequest.getDiscount().equals(0.0)){
             throw new StandardNotFoundException("Este produto deve ser promocional e deve ter desconto " +
                                                 "(endpoint incorreto para esta funcionalidade).");
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(postService.createPost(postToCreateRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(postService.createPost(promoPostToCreateRequest));
     }
 
     @GetMapping(path = "/{userId}/countPromo/")

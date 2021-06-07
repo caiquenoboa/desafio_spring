@@ -21,6 +21,4 @@ public class PostToCreateRequest {
     private Integer category;
     @NotNull(message = "O post deve informar o preco do produto")
     private Double price;
-    private Boolean hasPromo = false;
-    private Double discount = 0.0;
 }

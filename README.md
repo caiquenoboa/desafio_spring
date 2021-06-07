@@ -41,10 +41,11 @@ A coleção de testes criada no postman, pode ser importada na ferramenta à par
 * O projeto foi desenvolvido utilizando lombok (esta ferramenta fornece anotaçōes para evitar a necessidade de
   implementar getters, setters e construtores);
 * Para usuário e vendedor, foi implementado o conceito de herança, por possuírem atributos e comportamentos distintos;
-* **Especificamente para o problema fornecido**, os produtos promocionais foram implementados apenas com uma flag
-  *hasPromo* e um atributo *discount*;
+* As publicaçōes promocionais extendem as publicaçōes normais, porém, por terem apenas dois atributos distintos
+  (*hasPromo* e *discount*), no banco de dados elas foram tratadas em apenas uma tabela;
 * Os atributos *post_id* e *product_id* não precisam ser informados para cadastrar uma publicação (US0005), visto que
   o banco ficará responsável por gerenciar os id`s;
+* Caso a data de uma publicação não seja informada, a data atual será utilizada;
 * Foram implementadas exceçōes caso o um usuário tente seguir ele mesmo, caso um usuário ou vendedor tente seguir outro
   usuário, caso um usuário tente seguir alguem que já está seguindo, caso um usuário tente deixar de seguir alguem que
   ele não segue, caso uma publicação promocional tenha hasPromo como false ou desconto igual a 0, ou caso uma publicação
