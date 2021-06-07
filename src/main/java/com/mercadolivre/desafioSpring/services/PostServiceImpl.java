@@ -1,6 +1,5 @@
 package com.mercadolivre.desafioSpring.services;
 
-import com.mercadolivre.desafioSpring.exceptions.StandardNotFoundException;
 import com.mercadolivre.desafioSpring.models.Post;
 import com.mercadolivre.desafioSpring.models.Seller;
 import com.mercadolivre.desafioSpring.models.User;
@@ -26,11 +25,15 @@ public class PostServiceImpl implements PostService{
     private final UserService userService;
 
     @Override
+    public PostInfoResponse createPost(PostToCreateRequest postToCreateRequest) {
+        ProductInfoResponse productInfoResponse = productService.createProduct(postToCreateRequest.getDetail());
+        Post post = postRepository.save(this.toModel(postToCreateRequest, productInfoResponse));
+        return this.fromModel(post);
+    }
+
+    @Override
     public Post toModel(PostToCreateRequest postToCreateRequest, ProductInfoResponse productInfoResponse) {
-        Seller seller = sellerService.findById(postToCreateRequest.getUserId());
-        if(seller == null) {
-            throw new StandardNotFoundException("Vendedor " + postToCreateRequest.getUserId() + " nao encontrado");
-        }
+        Seller seller = sellerService.validateSeller(postToCreateRequest.getUserId());
         if(postToCreateRequest.getDate() == null){
             postToCreateRequest.setDate(LocalDate.now());
         }
@@ -48,18 +51,8 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public PostInfoResponse createPost(PostToCreateRequest postToCreateRequest) {
-        ProductInfoResponse productInfoResponse = productService.createProduct(postToCreateRequest.getDetail());
-        Post post = postRepository.save(this.toModel(postToCreateRequest, productInfoResponse));
-        return this.fromModel(post);
-    }
-
-    @Override
     public PostsBySellersFollowedResponse getAllLastPostsBySellersFollowed(Integer userId, String order) {
-        User user = userService.findById(userId);
-        if(user == null){
-            throw new StandardNotFoundException("Usuario " + userId + " nao encontrado");
-        }
+        User user = userService.validateUser(userId);
         List<PostInfoResponse> postsInfoResponse = new ArrayList<>();
         for (Seller seller: user.getFollowed()) {
             postsInfoResponse.addAll(seller.getPosts().stream()
@@ -68,33 +61,26 @@ public class PostServiceImpl implements PostService{
                     .collect(Collectors.toList()));
         }
         postsInfoResponse.sort(PostInfoResponse.PostInfoResponseNameComparator);
-        if(order.toLowerCase().strip().equals("name_desc")){
+        if(order.toLowerCase().strip().equals("date_desc")){
             Collections.reverse(postsInfoResponse);
         }
         return new PostsBySellersFollowedResponse(userId, postsInfoResponse);
     }
 
     @Override
-    public PromotionalProductsResponse getPromotionalProductsNumber(Integer userId) {
-        Seller seller = sellerService.findById(userId);
-        if(seller != null ) {
-            List<Post> promoPosts = seller.getPosts().stream()
-                                          .filter(post -> post.getHasPromo().equals(true))
-                                          .collect(Collectors.toList());
-            return new PromotionalProductsResponse(seller.getId(), seller.getUserName(), promoPosts.size());
-        }
-        throw new StandardNotFoundException("Vendedor " + userId + " nao encontrado.");
+    public PromotionalProductsResponse getPromotionalProductsNumber(Integer sellerId) {
+        Seller seller = sellerService.validateSeller(sellerId);
+        List<Post> promoPosts = seller.getPosts().stream()
+                                      .filter(post -> post.getHasPromo().equals(true))
+                                      .collect(Collectors.toList());
+        return new PromotionalProductsResponse(seller.getId(), seller.getUserName(), promoPosts.size());
     }
 
     @Override
     public PromoPostsBySellerIdResponse getPromoPostsBySellerId(Integer sellerId) {
-        Seller seller = sellerService.findById(sellerId);
-        if(seller == null){
-            throw new StandardNotFoundException("Vendedor " + sellerId + " nao encontrado");
-        }
+        Seller seller = sellerService.validateSeller(sellerId);
         List<PostInfoResponse> postsInfoResponse = seller.getPosts().stream()
-                .map(this::fromModel)
-                .filter(post -> post.getHasPromo().equals(true)).collect(Collectors.toList());
+                .map(this::fromModel).filter(post -> post.getHasPromo().equals(true)).collect(Collectors.toList());
         return new PromoPostsBySellerIdResponse(seller.getId(), seller.getUserName(), postsInfoResponse);
     }
 }

@@ -22,6 +22,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserInfoResponse createUser(UserToCreateRequest userToCreateRequest) {
+        String userName = userToCreateRequest.getUserName();
+        if(userRepository.findByUserName(userName) != null){
+            throw new StandardNotFoundException("Nome de usuario invalido (usuario com o nome "
+                                                + userName +" ja esta cadastrado no sistema).");
+        }
         User user = userRepository.save(this.toModel(userToCreateRequest));
         return new UserInfoResponse(user.getId(), user.getUserName(), false);
     }
@@ -32,61 +37,61 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Integer countByFollowedId(Integer userId){return userRepository.countByFollowedId(userId);}
-
-    @Override
-    public void followSeller(Seller sellerToFollow, Integer userId, Integer sellerIdToFollow) {
-        User user = this.findById(userId);
-        if(this.isUserValidToFollow(user, sellerToFollow, userId, sellerIdToFollow)) {
-            user.getFollowed().add(sellerToFollow);
-            userRepository.save(user);
-        }
-    }
-
-    @Override
-    public void unfollowSeller(Seller sellerToFollow, Integer userId, Integer sellerIdToUnfollow) {
-        User user = this.findById(userId);
-        if(user.getFollowed().contains(sellerToFollow)) {
-            user.getFollowed().remove(sellerToFollow);
-            userRepository.save(user);
-        }
-    }
-
-    @Override
     public User toModel(UserToCreateRequest userToCreateRequest) {
         return new User(null, userToCreateRequest.getUserName(), null);
     }
 
     @Override
-    public UserFollowedInfoResponse getFollowedInfo(Integer userId, String order) {
-        User user = this.findById(userId);
-        if(user != null ) {
-            List<UserInfoResponse> followedInfoResponseList = user.getFollowed().stream()
-                    .map(follower -> new UserInfoResponse(follower.getId(), follower.getUserName(), false))
-                    .sorted(UserInfoResponse.UserInfoResponseNameComparator)
-                    .collect(Collectors.toList());
-            if(order.toLowerCase().strip().equals("name_desc")){
-                Collections.reverse(followedInfoResponseList);
-            }
-            return new UserFollowedInfoResponse(user.getId(), user.getUserName(), followedInfoResponseList);
-        }
-        throw new StandardNotFoundException("Usuario " + userId + " nao encontrado.");
+    public Integer countByFollowedId(Integer userId) {
+        return userRepository.countByFollowedId(userId);
     }
 
     @Override
-    public Boolean isUserValidToFollow(User user, Seller sellerToFollow, Integer userId, Integer sellerIdToFollow){
-        String message = "";
-        if(user == null){
-            message += "Usuario " + userId + " nao existe. ";
-        }else if(sellerToFollow == null){
-            message += "Vendedor " + sellerIdToFollow + " nao existe. ";
-        }else if(userId.equals(sellerIdToFollow)){
-            message += "Os usuarios nao podem ser iguais. ";
-        }else if(user.getFollowed().contains(sellerToFollow)){
-            message += "O usuario " + userId + " ja segue o vendedor " + sellerIdToFollow + ". ";
-        }
-        if(!message.equals("")){ throw new StandardNotFoundException(message); }
+    public void followSeller(Seller sellerToFollow, Integer userId) {
+        User user = validateUserToFollowOrUnfollowSeller(userId, sellerToFollow, "follow");
+        user.getFollowed().add(sellerToFollow);
+        userRepository.save(user);
+    }
 
-        return true;
+    @Override
+    public void unfollowSeller(Seller sellerToUnFollow, Integer userId) {
+        User user = validateUserToFollowOrUnfollowSeller(userId, sellerToUnFollow, "unfollow");
+        user.getFollowed().remove(sellerToUnFollow);
+        userRepository.save(user);
+    }
+
+    @Override
+    public UserFollowedInfoResponse getFollowedInfo(Integer userId, String order) {
+        User user = validateUser(userId);
+        List<UserInfoResponse> followedInfoResponseList = user.getFollowed().stream()
+                .map(follower -> new UserInfoResponse(follower.getId(), follower.getUserName(), false))
+                .sorted(UserInfoResponse.UserInfoResponseNameComparator)
+                .collect(Collectors.toList());
+        if(order.toLowerCase().strip().equals("name_desc")){
+            Collections.reverse(followedInfoResponseList);
+        }
+        return new UserFollowedInfoResponse(user.getId(), user.getUserName(), followedInfoResponseList);
+    }
+
+    @Override
+    public User validateUser(Integer userId) {
+        User user = this.findById(userId);
+        if(user == null ) {
+            throw new StandardNotFoundException("Usuario " + userId + " nao encontrado.");
+        }
+        return user;
+    }
+
+    @Override
+    public User validateUserToFollowOrUnfollowSeller(Integer userId, Seller seller, String message) {
+        User user = validateUser(userId);
+        if(user.getId().equals(seller.getId())){
+            throw new StandardNotFoundException("Voce informou dois usuarios iguais com id " + userId);
+        } else if(message.equals("follow") && user.getFollowed().contains(seller)){
+            throw new StandardNotFoundException("Usuario " + userId + " ja segue o vendedor " + seller.getId());
+        } else if(message.equals("unfollow") && !user.getFollowed().contains(seller)){
+            throw new StandardNotFoundException("Usuario " + userId + " nao segue o vendedor " + seller.getId());
+        }
+        return user;
     }
 }

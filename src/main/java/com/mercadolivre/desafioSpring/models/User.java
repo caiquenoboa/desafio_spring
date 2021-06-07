@@ -20,6 +20,7 @@ public class User {
     private Integer id;
 
     @NotBlank(message = "Campo obrigatório")
+    @Column(unique = true)
     private String userName;
 
     @ManyToMany(fetch = FetchType.LAZY)

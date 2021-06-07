@@ -9,10 +9,11 @@ import com.mercadolivre.desafioSpring.responses.UserInfoResponse;
 public interface UserService {
     UserInfoResponse createUser(UserToCreateRequest userToCreateRequest);
     User findById(Integer userId);
-    Integer countByFollowedId(Integer userId);
-    void followSeller(Seller sellerToFollow, Integer userId, Integer sellerIdToFollow);
-    void unfollowSeller(Seller sellerToFollow, Integer userId, Integer sellerIdToUnfollow);
     User toModel(UserToCreateRequest userToCreateRequest);
+    Integer countByFollowedId(Integer userId);
+    void followSeller(Seller sellerToFollow, Integer userId);
+    void unfollowSeller(Seller sellerToUnFollow, Integer userId);
     UserFollowedInfoResponse getFollowedInfo(Integer userId, String order);
-    Boolean isUserValidToFollow(User user, Seller sellerToFollow, Integer userId, Integer sellerIdToFollow);
+    User validateUser(Integer userId);
+    User validateUserToFollowOrUnfollowSeller(Integer userId, Seller seller, String message);
 }

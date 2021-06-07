@@ -7,6 +7,7 @@ import com.mercadolivre.desafioSpring.responses.*;
 import com.mercadolivre.desafioSpring.services.PostService;
 import com.mercadolivre.desafioSpring.views.PostView;
 import com.mercadolivre.desafioSpring.views.UserView;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,10 @@ import javax.validation.Valid;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/products")
+@Api(tags = "Gerenciador de posts",
+     description = "Gerenciar posts, promocionais ou não, além de seus respectivos produtos " +
+             "(não há um controller para produtos devido à baixa necessidade de funcionalidades " +
+             "específicas para este tipo de entidade). ")
 public class PostController {
 
     private final PostService postService;
@@ -33,9 +38,10 @@ public class PostController {
     @GetMapping("/followed/{userId}/list")
     @JsonView(UserView.Simple.class)
     public ResponseEntity<PostsBySellersFollowedResponse> getPostsBySellerFollowed(@PathVariable Integer userId,
-                                                                                   String order) {
+                                                                                   @RequestParam(defaultValue
+                                                                                           = "date_asc") String order) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(postService.getAllLastPostsBySellersFollowed(userId,order));
+                .body(postService.getAllLastPostsBySellersFollowed(userId, order));
     }
 
     @PostMapping("/newpromopost")

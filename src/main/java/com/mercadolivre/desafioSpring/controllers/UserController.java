@@ -9,6 +9,7 @@ import com.mercadolivre.desafioSpring.responses.UserInfoResponse;
 import com.mercadolivre.desafioSpring.services.SellerService;
 import com.mercadolivre.desafioSpring.services.UserService;
 import com.mercadolivre.desafioSpring.views.UserView;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,10 @@ import javax.validation.Valid;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/users")
+@Api(tags = "Gerenciador de usuários",
+        description = "Gerenciar usuários e vendedores, não há um controller separado para as duas entidades " +
+                "pois existem apenas duas funcionalidades ligadas especificamente ao vendedor (\"getFollowersNumber\" " +
+                "e \"getFollowers\"). Se o sistema fosse mais complexo, faria sentido ter dois controllers distintos)")
 public class UserController {
 
     private final UserService userService;
@@ -55,7 +60,7 @@ public class UserController {
     @GetMapping(path = "/{userId}/followed/list")
     @JsonView(UserView.Simple.class)
     public ResponseEntity<UserFollowedInfoResponse> getFollowed(@PathVariable Integer userId,
-                                                                @RequestParam(defaultValue = "asc") String order) {
+                                                                @RequestParam(defaultValue = "name_asc") String order) {
         UserFollowedInfoResponse userFollowersInfoResponse = userService.getFollowedInfo(userId, order);
         return ResponseEntity.status(HttpStatus.OK).body(userFollowersInfoResponse);
     }
