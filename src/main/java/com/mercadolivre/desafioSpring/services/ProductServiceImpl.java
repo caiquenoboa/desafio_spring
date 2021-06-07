@@ -15,6 +15,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public ProductInfoResponse createProduct(ProductToCreateRequest productToCreateRequest) {
+        this.toModel(productToCreateRequest);
         Product product = productRepository.save(this.toModel(productToCreateRequest));
         return this.fromModel(product);
     }

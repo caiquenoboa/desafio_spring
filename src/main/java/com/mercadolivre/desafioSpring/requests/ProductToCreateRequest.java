@@ -4,20 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class ProductToCreateRequest {
-    @NotNull(message = "O produto deve ter um nome")
+    @NotBlank(message = "O produto deve ter um nome")
     private String productName;
-    @NotNull(message = "O produto deve ter um tipo")
+    @NotBlank(message = "O produto deve ter um tipo")
     private String type;
-    @NotNull(message = "O produto deve ter uma marca")
+    @NotBlank(message = "O produto deve ter uma marca")
     private String brand;
-    @NotNull(message = "O produto deve ter uma cor")
+    @NotBlank(message = "O produto deve ter uma cor")
     private String color;
-    @NotNull(message = "O produto deve ter uma nota")
+    @NotBlank(message = "O produto deve ter uma nota")
     private String notes;
 }
