@@ -12,6 +12,12 @@ Para iniciar, abra o projeto no *IntelliJ* e clique em *Run*.
 
 Se preferir, execute o projeto no terminal `mvn spring-boot:run`.
 
+## Postman
+Para importar a *collection* deste projeto em seu *Postman*,
+importe o arquivo `Requisitos.postman_collection.json`.
+
+Este arquivo se encontra na raiz do projeto.
+
 ## Swagger
 Para documentar as *APIs* e facilitar os testes, este projeto está mapeado com o *Swagger*.
 
@@ -22,8 +28,24 @@ Usuários
 
 id | userName | isSeller
 --- | --- | ---
-1 | Cliente 1 | `false`
-2 | Cliente 2 | `false`
-3 | Cliente 3 | `false`
-4 | Vendedor 1 | `true`
-5 | Vendedor 2 | `true`
+1 | cliente1 | `false`
+2 | cliente2 | `false`
+3 | cliente3 | `false`
+4 | vendedor1 | `true`
+5 | vendedor2 | `true`
+
+## Requisitos implementados
+Requisito | Implementado
+--- | ---
+US 0001 | ✅
+US 0002 | ✅
+US 0003 | ✅
+US 0004 | ✅
+US 0005 | ✅
+US 0006 | ✅
+US 0007 | ✅
+US 0008 | ✅
+US 0009 | ✅
+US 0010 | ✅
+US 0011 | ✅
+US 0012 | ✅

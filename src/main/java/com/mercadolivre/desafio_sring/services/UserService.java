@@ -54,10 +54,6 @@ public class UserService implements IUserService {
                 .findById(userIdToFollow)
                 .orElseThrow(() -> new ObjectNotFoundException("User to follow not found"));
 
-        if (user.getIsSeller()) {
-            throw  new GeneralException("User is a seller", HttpStatus.BAD_REQUEST.value());
-        }
-
         if (!userToFollow.getIsSeller()) {
             throw  new GeneralException("UserToFollow is not a seller", HttpStatus.BAD_REQUEST.value());
         }
@@ -109,10 +105,6 @@ public class UserService implements IUserService {
         User user = userRepository
                 .findById(userId)
                 .orElseThrow(() -> new ObjectNotFoundException("User not found"));
-
-        if (user.getIsSeller()) {
-            throw new GeneralException("User is a seller", HttpStatus.BAD_REQUEST.value());
-        }
 
         List<UserFollowedListUserResponseDTO> followedDTO = userRepository
                 .findByFollowersUserId(userId, Sorter.getSort(mapFieldSort, sort))

@@ -1,5 +1,6 @@
 package com.mercadolivre.desafio_sring.exceptions;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -39,6 +40,12 @@ public class ControllerExceptionHandler {
         String message = "The String Date '" + e.getParsedString() + "' is invalid";
 
         StandardError standardError = new StandardError(HttpStatus.BAD_REQUEST.value(), message, System.currentTimeMillis());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(standardError);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<StandardError> errorJpaUnique(DataIntegrityViolationException e, HttpServletRequest request) {
+        StandardError standardError = new StandardError(HttpStatus.BAD_REQUEST.value(), "This record already exists", System.currentTimeMillis());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(standardError);
     }
 }

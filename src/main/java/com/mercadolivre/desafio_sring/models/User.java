@@ -14,6 +14,7 @@ public class User {
     private Long userId;
 
     @NotBlank
+    @Column(unique = true)
     private String userName;
 
     @NotNull
