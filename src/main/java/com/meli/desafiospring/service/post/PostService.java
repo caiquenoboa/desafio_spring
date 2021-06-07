@@ -10,6 +10,7 @@ import com.meli.desafiospring.model.Post;
 import com.meli.desafiospring.model.User;
 import com.meli.desafiospring.service.user.UserByIdService;
 import com.meli.desafiospring.service.user.followed.GetAllFollowersService;
+import com.meli.desafiospring.util.list.ListUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -27,6 +27,7 @@ public class PostService {
     private final UserByIdService userByIdService;
     private final PostByIdsUserService postByIdsUserService;
     private final GetAllFollowersService getAllFollowersService;
+    private final ListUtil<User, Integer> listUtil = new ListUtil<>();
 
     public void createPost(PostRequest postRequest) {
         User user = this.userByIdService.getUserByIdService(postRequest.getUserId());
@@ -43,10 +44,8 @@ public class PostService {
     public UserResponse getPostsOfSellersFollowed(Integer userId, String order) {
         User user = this.userByIdService.getUserByIdService(userId);
 
-        List<Integer> usersIdsFollowed = getAllFollowersService.getAllById(user.getId())
-                                                                .stream()
-                                                                .map(User::getId)
-                                                                .collect(Collectors.toList());
+        List<User> usersFollowers = getAllFollowersService.getAllById(user.getId());
+        List<Integer> usersIdsFollowed =  listUtil.map(User::getId, usersFollowers);
 
         List<Post> posts = postByIdsUserService.getAllPostByIdsUser(usersIdsFollowed);
 

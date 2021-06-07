@@ -25,7 +25,7 @@ public class Post {
     private LocalDate date;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId  //TODO Estudar esse cara
+    @MapsId
     @JoinColumn(name = "id_detail")
     private Detail detail;
 

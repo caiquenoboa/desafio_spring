@@ -3,18 +3,19 @@ package com.meli.desafiospring.service.user.followers;
 import com.meli.desafiospring.gateway.response.UserResponse;
 import com.meli.desafiospring.model.User;
 import com.meli.desafiospring.service.user.UserByIdService;
+import com.meli.desafiospring.util.list.ListUtil;
 import com.meli.desafiospring.util.user.OrderUserResponseUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class FollowersService {
 
     private final UserByIdService userByIdService;
+    private final ListUtil<User, UserResponse> listUtil = new ListUtil<>();
 
     public UserResponse getFollowers(Integer userId, boolean isEndPointOfCount, String order){
         User user = this.userByIdService.getUserByIdService(userId);
@@ -33,9 +34,8 @@ public class FollowersService {
     }
 
     private UserResponse mountObjectOfResponse(User user, List<User> followers, String order){
-        List<UserResponse> followersResponse = followers.stream()
-                                                        .map(u -> new UserResponse( u.getId(), u.getUserName() ))
-                                                        .collect(Collectors.toList());
+        List<UserResponse> followersResponse = listUtil
+                                                .map(u -> new UserResponse( u.getId(), u.getUserName() ), followers);
 
         OrderUserResponseUtil.order(followersResponse, order);
 

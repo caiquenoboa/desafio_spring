@@ -14,7 +14,7 @@ public class LocalDateDeserializer extends JsonDeserializer<LocalDate> {
     public LocalDate deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         String date = jsonParser.getValueAsString();
 
-        if(date.isBlank()){ //TODO: Validar dara melhor
+        if(date.isBlank()){
             throw new IllegalArgumentException("Date cannot be null or empty");
         }
 
