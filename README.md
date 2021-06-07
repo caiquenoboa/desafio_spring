@@ -5,7 +5,7 @@ O objetivo deste desafio é aplicar os conteúdos dados até o momento durante o
 (Git, Java e Spring), com a finalidade de poder implementar uma API REST a partir de um enunciado proposto, uma 
 especificação de requisitos e documentação anexada.
 
-## Como executar
+## Endpoints / Requisitos Implementados
 
 Para executar a API, basta executar o projeto no IntelliJ e testar os endpoints fornecidos:
 * **US0000 -** Criar usuario ( /users );
@@ -24,7 +24,7 @@ Para executar a API, basta executar o projeto no IntelliJ e testar os endpoints 
 
 ## Documentação (Swagger)
 
-A documentação da API criada através do Swagger pode ser acessada em:
+A documentação da API pode ser visualizada através do Swagger em:
 ```
 http://localhost:8080/swagger-ui.html
 ```
@@ -32,8 +32,8 @@ http://localhost:8080/swagger-ui.html
 
 ## Testes (Postman)
 
-Alguns testes foram criados no postman e podem ser importados à partir do arquivo localizado em 
-*src/main/resources/testes.postman_collection.json*
+A coleção de testes criada no postman, pode ser importada na ferramenta à partir do arquivo localizado em 
+"*src/main/resources/testes.postman_collection.json*"
 
 
 ## Informações adicionais
@@ -51,7 +51,7 @@ Alguns testes foram criados no postman e podem ser importados à partir do arqui
   normal tenha hasPromo como true ou tenha algum valor de desconto;
 
 
-## Tabelas do banco de dados
+## Banco de dados (JPA / Hibernate / h2)
 
 O banco de dados pode ser acessado no link:
 ```
