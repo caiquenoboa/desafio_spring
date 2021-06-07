@@ -1,4 +1,4 @@
-package com.mercadolivre.desafioSpring;
+package com.mercadolivre.desafioSpring.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

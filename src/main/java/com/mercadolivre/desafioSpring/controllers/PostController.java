@@ -47,11 +47,7 @@ public class PostController {
     @JsonView(PostView.PromotionalDetailed.class)
     public ResponseEntity<PostInfoResponse> createPromotionalPost
             (@RequestBody @Valid PromoPostToCreateRequest promoPostToCreateRequest) {
-        if(promoPostToCreateRequest.getHasPromo().equals(false) || promoPostToCreateRequest.getDiscount().equals(0.0)){
-            throw new StandardNotFoundException("Este produto deve ser promocional e deve ter desconto " +
-                                                "(endpoint incorreto para esta funcionalidade).");
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).body(postService.createPost(promoPostToCreateRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(postService.createPromoPost(promoPostToCreateRequest));
     }
 
     @GetMapping(path = "/{userId}/countPromo/")

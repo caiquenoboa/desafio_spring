@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 public interface PostService {
     PostInfoResponse createPost(PromoPostToCreateRequest promoPostToCreateRequest);
+    PostInfoResponse createPromoPost(PromoPostToCreateRequest promoPostToCreateRequest);
     Post toModel(PromoPostToCreateRequest promoPostToCreateRequest, ProductInfoResponse productInfoResponse);
     PostInfoResponse fromModel(Post post);
     PostsBySellersFollowedResponse getAllLastPostsBySellersFollowed(Integer userId, String order);

@@ -1,5 +1,6 @@
 package com.mercadolivre.desafioSpring.services;
 
+import com.mercadolivre.desafioSpring.exceptions.StandardNotFoundException;
 import com.mercadolivre.desafioSpring.models.Post;
 import com.mercadolivre.desafioSpring.models.Seller;
 import com.mercadolivre.desafioSpring.models.User;
@@ -30,6 +31,15 @@ public class PostServiceImpl implements PostService{
         ProductInfoResponse productInfoResponse = productService.createProduct(promoPostToCreateRequest.getDetail());
         Post post = postRepository.save(this.toModel(promoPostToCreateRequest, productInfoResponse));
         return this.fromModel(post);
+    }
+
+    @Override
+    public PostInfoResponse createPromoPost(PromoPostToCreateRequest promoPostToCreateRequest){
+        if(promoPostToCreateRequest.getHasPromo().equals(false) || promoPostToCreateRequest.getDiscount().equals(0.0)){
+            throw new StandardNotFoundException("Este produto deve ser promocional e deve ter desconto " +
+                    "(endpoint incorreto para esta funcionalidade).");
+        }
+        return createPost(promoPostToCreateRequest);
     }
 
     @Override
