@@ -19,6 +19,10 @@ public class FollowersService {
     public UserResponse getFollowers(Integer userId, boolean isEndPointOfCount, String order){
         User user = this.userByIdService.getUserByIdService(userId);
 
+        if(user.isUserTypeClient()){
+            throw new RuntimeException("Client cannot has followers");
+        }
+
         List<User> followers = user.getFollowers();
 
         if(isEndPointOfCount){

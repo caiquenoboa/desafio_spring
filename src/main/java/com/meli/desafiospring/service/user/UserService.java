@@ -30,7 +30,7 @@ public class UserService {
 
         if(hasRelationship){
             throw new RelationshipAlreadyExistException(
-                    String.format("Usuário %s já segue o usuário %s ", userIdToFollow, userId));
+                    String.format("Usuário %s já segue o usuário %s ", userId, userIdToFollow));
         }
 
         userToFollow.addUserFollower(userActual);

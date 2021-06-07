@@ -19,5 +19,11 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = " SELECT * FROM USER u " +
             " INNER JOIN USER_FOLLOWER uf ON uf.id_follower = u.id " +
             " WHERE uf.id_user = :userId", nativeQuery = true)
+    Optional<List<User>> findAllFollowersByUserId(Integer userId);
+
+
+    @Query(value = " SELECT * FROM USER u " +
+            " INNER JOIN USER_FOLLOWER uf ON uf.id_user = u.id " +
+            " WHERE uf.id_follower = :userId", nativeQuery = true)
     Optional<List<User>> findAllFollowedByUserId(Integer userId);
 }
