@@ -8,7 +8,7 @@ especificação de requisitos e documentação anexada.
 ## Endpoints / Requisitos Implementados
 
 Para executar a API, basta executar o projeto no IntelliJ e testar os endpoints fornecidos:
-* **US0000 -** Criar usuario ( /users );
+* **US0000 -** Criar usuario a partir das variáveis ***userName* e *isSeller*** ( /users );
 * **US0001 -** Seguir um usuário ( /users/{userId}/follow/{userIdToFollow} );
 * **US0002 -** Retornar número de seguidores de um vendedor (/users/{userId}/followers/count/);
 * **US0003 -** Listar informações dos seguidores de um vendedor ( /users/{userId}/followers/list );
