@@ -45,3 +45,8 @@ US 0009 | ✅
 US 0010 | ✅
 US 0011 | ✅
 US 0012 | ✅
+
+## Refatoração
+
+* Criei a classe [OrderListUtil](https://github.com/caiquenoboa/desafio_spring/blob/paulo/src/main/java/com/meli/desafiospring/util/list/OrderListUtil.java) 
+para abstrair e juntar a forma com que sorteia uma lista em uma classe só.
