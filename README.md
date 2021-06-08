@@ -8,18 +8,17 @@ especificação de requisitos e documentação anexada.
 ## Endpoints / Requisitos Implementados
 
 Para executar a API, basta executar o projeto no IntelliJ e testar os endpoints fornecidos:
-* **US0000 -** Criar usuário à partir de um JSON no formato *{ userName: "String", isSeller: boolean }* **( /users )**;
-* **US0001 -** Seguir um usuário **( /users/{userId}/follow/{userIdToFollow} )**;
-* **US0002 -** Retornar número de seguidores de um vendedor **( /users/{userId}/followers/count/ )**;
-* **US0003 -** Listar informações dos seguidores de um vendedor **( /users/{userId}/followers/list )**;
-* **US0004/8 -** Listar vendedores que um usuário segue **( /users/{UserID}/followed/list?order=name_asc )**;
-* **US0005 -** Cadastrar uma publicaçāo **( /products/newpost )**;
-* **US0006/9 -** Listar últimas publicações dos vendedores que um usuário segue **( /products/followed/{userId}
-  /list?order=date_asc )**;
-* **US0007 -** Deixar de seguir um vendedor **( /users/{userId}/unfollow/{userIdToUnfollow} )**;
-* **US0010 -** Cadastrar uma publicação promocional **( /products/newpromopost )**;
-* **US0011 -** Listar a quantidade de publicações promocionais de um vendedor **( /products/{userId}/countPromo/ )**;
-* **US0012 -** Listar produtos promocionais de um vendedor **( /products/{userId}/list/ )**.
+* **US0000 -** Criar usuário à partir de um JSON no formato *{ userName: "String", isSeller: boolean }* **(/users)**;
+* **US0001 -** Seguir um usuário **(/users/{userId}/follow/{userIdToFollow})**;
+* **US0002 -** Retornar número de seguidores de um vendedor **(/users/{userId}/followers/count/)**;
+* **US0003 -** Listar informações dos seguidores de um vendedor **(/users/{userId}/followers/list)**;
+* **US0004/8 -** Listar vendedores que um usuário segue **(/users/{UserID}/followed/list?order=name_asc)**;
+* **US0005 -** Cadastrar uma publicaçāo **(/products/newpost)**;
+* **US0006/9 -** Listar últimas publicações dos vendedores que um usuário segue **(/products/followed/{userId}/list?order=date_asc)**;
+* **US0007 -** Deixar de seguir um vendedor **(/users/{userId}/unfollow/{userIdToUnfollow})**;
+* **US0010 -** Cadastrar uma publicação promocional **(/products/newpromopost)**;
+* **US0011 -** Listar a quantidade de publicações promocionais de um vendedor **(/products/{userId}/countPromo/)**;
+* **US0012 -** Listar produtos promocionais de um vendedor **(/products/{userId}/list/)**.
 
 
 ## Documentação (Swagger)
