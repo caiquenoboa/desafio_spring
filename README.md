@@ -60,8 +60,10 @@ http://localhost:8080/h2-console
 
 As credenciais a serem utilizadas são:
 
-* **Usuario:** mercadolivre
-* **Senha:** não há senha para acesso, este campo deve ficar em branco.
+* **Driver Class:** org.h2.Driver
+* **JDBC URL:** jdbc:h2:./h2-desafioSpring
+* **User Name:** mercadolivre
+* **Password:** não há senha para acesso, este campo deve ficar em branco.
 
 <h3>Tabelas com os dados já cadastrados</h3>
 
@@ -105,7 +107,7 @@ ID | BRAND | COLOR | NOTES | PRODUCT_NAME | TYPE
 
 **Tabela FOLLOWERS**
 
-ID | USER_NAME |
+USER_ID | SELLER_ID |
 --- | --- | 
 3 | 4
 1 | 3
