@@ -36,7 +36,7 @@ public class PostService {
         Post post = new Post(detail, user);
 
         BeanUtils.copyProperties(postRequest.getDetail(), detail);
-        BeanUtils.copyProperties(postRequest, post);
+        BeanUtils.copyProperties(postRequest, post, "userId");
 
         postRepository.save(post);
     }
