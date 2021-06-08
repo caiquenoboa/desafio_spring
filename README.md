@@ -78,6 +78,11 @@ US 0003 | ✅
 US 0004 | ✅
 US 0005 | ✅
 
+Para executar os testes, execute o seguinte comando no terminal:
+```
+mvn test
+```
+
 ## Itens extra-escopo
 ✅ Banco de dados  
 ✅ Swagger  
