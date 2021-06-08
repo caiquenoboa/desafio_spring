@@ -91,7 +91,10 @@ public class PostServiceImpl implements PostService{
     public PromoPostsBySellerIdResponse getPromoPostsBySellerId(Integer sellerId) {
         Seller seller = sellerService.validateSeller(sellerId);
         List<PostInfoResponse> postsInfoResponse = seller.getPosts().stream()
-                .map(this::fromModel).filter(post -> post.getHasPromo().equals(true)).collect(Collectors.toList());
+                .map(this::fromModel).filter(post -> post.getHasPromo().equals(true))
+                .sorted(PostInfoResponse.PostInfoResponseNameComparator)
+                .collect(Collectors.toList());
+        Collections.reverse(postsInfoResponse);
         return new PromoPostsBySellerIdResponse(seller.getId(), seller.getUserName(), postsInfoResponse);
     }
 }
