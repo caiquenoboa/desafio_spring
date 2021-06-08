@@ -12,7 +12,6 @@ public class LocalDateSerializer extends JsonSerializer<LocalDate> {
 
     @Override
     public void serialize(LocalDate localDate, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        //TODO: validar quando a data é vazia
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String dateFormatted = localDate.format(formatter);
         jsonGenerator.writeString(dateFormatted);
