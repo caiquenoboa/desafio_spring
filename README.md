@@ -32,8 +32,8 @@ http://localhost:8080/swagger-ui.html
 
 ## Testes (Postman)
 
-Foi criado uma coleção de testes no postman. Ela pode ser importada na ferramenta à partir do arquivo localizado em 
-"*src/main/resources/testes.postman_collection.json*".
+Foi criado uma coleção de testes no postman. Ela pode ser importada na ferramenta à partir do **arquivo localizado em 
+"*src/main/resources/testes.postman_collection.json*"**.
 
 
 ## Informações adicionais
@@ -67,18 +67,18 @@ As credenciais a serem utilizadas são:
 <h3>Tabelas com os dados já cadastrados</h3>
 
 **OBS:** Vale ressaltar que a tabela SELLER é composta por apenas uma coluna com os id`s de quem é vendedor 
-(por isso ela não será demonstrada aqui) e de acordo com os dados já cadastrados no banco, Joao e Lindiberg 
-são usuários e Paula e Fernanda são vendedoras. A tabela SELLER seria mais útil caso o vendedor tivesse mais 
+(por isso ela não será demonstrada aqui) e de acordo com os dados já cadastrados no banco, **paulacorreia e lindivoraz 
+são usuários, e paulacorreia e calabrezafe são vendedoras**. A tabela SELLER seria mais útil caso o vendedor tivesse mais 
 características distintas, se comparado à um usuário. Além disso, foi admitido que um post possui um único produto.
 
 **Tabela USER**
 
 ID | USER_NAME |
 --- | --- | 
-1 | Joao Teixeira
-2 | Lindiberg Voraz
-3 | Paula Colcheia 
-4 | Fernanda Calabreza
+1 | joteixera
+2 | lindivoraz
+3 | paulacorreia
+4 | calabrezafe
 
 **Tabela POST**
 
