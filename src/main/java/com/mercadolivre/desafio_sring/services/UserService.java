@@ -31,7 +31,7 @@ public class UserService implements IUserService {
     public User findUserById(Long userId) {
         return userRepository
                 .findById(userId)
-                .orElseThrow(() -> new ObjectNotFoundException("User not a found"));
+                .orElseThrow(() -> new ObjectNotFoundException("User not found"));
     }
 
     @Override

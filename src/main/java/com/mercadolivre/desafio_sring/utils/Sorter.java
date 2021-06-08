@@ -25,6 +25,6 @@ public abstract class Sorter {
 
         Sort.Direction sortDirection = stringSplited[1].equals("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
 
-        return Sort.by(sortDirection, filedNameSort);
+        return Sort.by(new Sort.Order(sortDirection, filedNameSort).ignoreCase());
     }
 }
