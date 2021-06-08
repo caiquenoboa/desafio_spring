@@ -23,7 +23,7 @@ public class UnfollowUserService {
         boolean hasRelationship = userValidator.validIfHasRelationshipBetweenUsers(userIdToUnfollow, userId);
 
         if(!hasRelationship){
-            throw new NotFollowException(String.format("User %s not follow user %s", userId, userIdToUnfollow));
+            throw new NotFollowException(String.format("User %s doesn't follow user %s", userId, userIdToUnfollow));
         }
 
         userActual.getFollowers().remove(userToUnfollow);
