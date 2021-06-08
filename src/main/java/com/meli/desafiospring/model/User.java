@@ -48,5 +48,9 @@ public class User {
         return this.userType.equals(UserType.CLIENT);
     }
 
+    public boolean isUserTypeSeller(){
+        return this.userType.equals(UserType.SELLER);
+    }
+
 
 }

@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/product/")
+@RequestMapping("/products/")
 public class PostController {
 
     private final PostService postService;

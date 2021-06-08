@@ -25,8 +25,8 @@ public class UserService {
         User userActual = userByIdService.getUserByIdService(userId);
         User userToFollow = userByIdService.getUserByIdService(userIdToFollow);
 
-        if(userActual.isUserTypeClient()){
-            throw new ClientCannotFollowSellerException("Client cannot follow Seller");
+        if(userActual.isUserTypeSeller() && userToFollow.isUserTypeClient()){
+            throw new ClientCannotFollowSellerException("Seller cannot follow Client");
         }
 
         boolean hasRelationship = userValidator.validIfHasRelationshipBetweenUsers(userIdToFollow, userId);

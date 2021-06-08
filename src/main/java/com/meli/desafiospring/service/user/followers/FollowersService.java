@@ -1,5 +1,6 @@
 package com.meli.desafiospring.service.user.followers;
 
+import com.meli.desafiospring.exception.user.ClientHasNotFollowerException;
 import com.meli.desafiospring.gateway.response.UserResponse;
 import com.meli.desafiospring.model.User;
 import com.meli.desafiospring.service.user.UserByIdService;
@@ -21,7 +22,7 @@ public class FollowersService {
         User user = this.userByIdService.getUserByIdService(userId);
 
         if(user.isUserTypeClient()){
-            throw new RuntimeException("Client cannot has followers");
+            throw new ClientHasNotFollowerException("Client cannot has followers");
         }
 
         List<User> followers = user.getFollowers();
