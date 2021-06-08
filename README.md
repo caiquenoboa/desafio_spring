@@ -20,6 +20,19 @@ Para executar a API, basta executar o projeto no IntelliJ e testar os endpoints 
 * **US0011 -** Listar a quantidade de publicações promocionais de um vendedor **(/products/{userId}/countPromo/)**;
 * **US0012 -** Listar produtos promocionais de um vendedor **(/products/{userId}/list/)**.
 
+## Executar
+
+Ao clonar o projeto, é necessário alterá-lo para branch *joao-teixeira-araujo*:
+
+```
+git checkout joao-teixeira-araujo
+```
+
+O projeto pode ser executado em uma IDE (de preferência no IntelliJ) ou através do terminal utilizando o comando:
+
+```
+mvn spring-boot:run
+```
 
 ## Documentação (Swagger)
 
@@ -31,8 +44,11 @@ http://localhost:8080/swagger-ui.html
 
 ## Testes (Postman)
 
-Foi criado uma coleção de testes no postman. Ela pode ser importada na ferramenta à partir do **arquivo localizado em 
-"*src/main/resources/testes.postman_collection.json*"**.
+Foi criado uma coleção de testes no postman. Ela pode ser importada na ferramenta à partir do arquivo localizado em: 
+
+```
+src/main/resources/testes.postman_collection.json
+```
 
 
 ## Informações adicionais
