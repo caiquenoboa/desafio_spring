@@ -1,6 +1,6 @@
 package com.meli.desafiospring.service.user.unfollow;
 
-import com.meli.desafiospring.exception.user.UserNotFollowException;
+import com.meli.desafiospring.exception.user.NotFollowException;
 import com.meli.desafiospring.gateway.repository.UserRepository;
 import com.meli.desafiospring.model.User;
 import com.meli.desafiospring.service.user.UserByIdService;
@@ -23,7 +23,7 @@ public class UnfollowUserService {
         boolean hasRelationship = userValidator.validIfHasRelationshipBetweenUsers(userIdToUnfollow, userId);
 
         if(!hasRelationship){
-            throw new UserNotFollowException(String.format("User %s not follow user %s", userId, userIdToUnfollow));
+            throw new NotFollowException(String.format("User %s not follow user %s", userId, userIdToUnfollow));
         }
 
         userActual.getFollowers().remove(userToUnfollow);

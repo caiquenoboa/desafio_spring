@@ -22,6 +22,7 @@ public class PostRequest {
 
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
+    @NotNull(message = "date cannot be null or empty")
     private LocalDate date;
 
     @Valid
@@ -30,6 +31,6 @@ public class PostRequest {
     private int category;
     private double price;
 
-    private Boolean hasPromo;
-    private Double discount;
+//    private Boolean hasPromo;
+//    private Double discount;
 }

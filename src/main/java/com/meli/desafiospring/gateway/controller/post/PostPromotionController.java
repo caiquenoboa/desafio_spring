@@ -1,5 +1,6 @@
 package com.meli.desafiospring.gateway.controller.post;
 
+import com.meli.desafiospring.gateway.request.PostPromotionRequest;
 import com.meli.desafiospring.gateway.request.PostRequest;
 import com.meli.desafiospring.gateway.response.PostPromoResponse;
 import com.meli.desafiospring.service.post.promotion.GetQuantityOfProductsPromotionService;
@@ -20,8 +21,8 @@ public class PostPromotionController {
     private final GetQuantityOfProductsPromotionService productsPromotionService;
 
     @PostMapping(value = "/newpromopost")
-    public ResponseEntity<HttpStatus> createPostPromotion(@RequestBody @Valid PostRequest postRequest){
-        postPromotionService.create(postRequest);
+    public ResponseEntity<HttpStatus> createPostPromotion(@RequestBody @Valid PostPromotionRequest postPromotionRequest){
+        postPromotionService.create(postPromotionRequest);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

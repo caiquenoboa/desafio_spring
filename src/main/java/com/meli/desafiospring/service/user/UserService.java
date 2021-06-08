@@ -18,6 +18,9 @@ public class UserService {
     private final UserValidator userValidator;
 
     public void followUser(Integer userId, Integer userIdToFollow) {
+        if(userId.equals(userIdToFollow)){
+            throw new IllegalArgumentException("The user cannot follow himself");
+        }
 
         User userActual = userByIdService.getUserByIdService(userId);
         User userToFollow = userByIdService.getUserByIdService(userIdToFollow);
@@ -30,7 +33,7 @@ public class UserService {
 
         if(hasRelationship){
             throw new RelationshipAlreadyExistException(
-                    String.format("Usuário %s já segue o usuário %s ", userId, userIdToFollow));
+                    String.format("User %s already follow user %s ", userId, userIdToFollow));
         }
 
         userToFollow.addUserFollower(userActual);

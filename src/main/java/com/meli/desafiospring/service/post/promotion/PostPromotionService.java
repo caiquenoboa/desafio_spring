@@ -1,5 +1,6 @@
 package com.meli.desafiospring.service.post.promotion;
 
+import com.meli.desafiospring.gateway.request.PostPromotionRequest;
 import com.meli.desafiospring.gateway.request.PostRequest;
 import com.meli.desafiospring.service.post.PostService;
 import lombok.AllArgsConstructor;
@@ -11,7 +12,7 @@ public class PostPromotionService {
 
     private final PostService postService;
 
-    public void create(PostRequest postRequest) {
+    public void create(PostPromotionRequest postRequest) {
         Boolean hasPromo = postRequest.getHasPromo();
         Double discount = postRequest.getDiscount();
 
@@ -21,6 +22,10 @@ public class PostPromotionService {
 
         if(discount == null){
             throw new IllegalArgumentException("The field discount is required");
+        }
+
+        if(hasPromo.equals(Boolean.FALSE) && discount > 0){
+            postRequest.setDiscount(0.0);
         }
 
         postService.createPost(postRequest);
