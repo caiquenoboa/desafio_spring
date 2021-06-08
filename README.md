@@ -8,7 +8,7 @@ especificação de requisitos e documentação anexada.
 ## Endpoints / Requisitos Implementados
 
 Para executar a API, basta executar o projeto no IntelliJ e testar os endpoints fornecidos:
-* **US0000 -** Criar usuario ( /users );
+* **US0000 -** Criar usuario a partir das variáveis ***userName* e *isSeller*** ( /users );
 * **US0001 -** Seguir um usuário ( /users/{userId}/follow/{userIdToFollow} );
 * **US0002 -** Retornar número de seguidores de um vendedor (/users/{userId}/followers/count/);
 * **US0003 -** Listar informações dos seguidores de um vendedor ( /users/{userId}/followers/list );
@@ -32,8 +32,9 @@ http://localhost:8080/swagger-ui.html
 
 ## Testes (Postman)
 
-A coleção de testes criada no postman, pode ser importada na ferramenta à partir do arquivo localizado em 
-"*src/main/resources/testes.postman_collection.json*".
+Foi criado uma coleção de testes no postman. Ela pode ser importada na ferramenta à partir do arquivo localizado em 
+"*src/main/resources/testes.postman_collection.json*". Sempre verificar o endpoint utilizado pois o Postman pode
+não ter salvo alguma possível alteração.
 
 
 ## Informações adicionais
