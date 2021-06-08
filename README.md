@@ -18,9 +18,14 @@ git checkout gabriel-henrique-leal-garcia
 ## Run
 Para iniciar, abra o projeto no *IntelliJ*, aguarde ele instalar todas as dependências e clique em *Run*.
 
-## Postman
-Para importar a *collection* deste projeto em seu *Postman*, importe o arquivo `Requisitos.postman_collection.json`.  
-Este arquivo se encontra na raiz do projeto.
+Se preferir executar o projeto no terminal, entre na pasta do projeto e execute:
+```
+mvn spring-boot:run
+```
+
+## Postman & Insomnia
+Para importar a *collection* deste projeto em seu *Postman* ou *Insomnia*, importe o arquivo `Requisitos.postman_collection.json`.  
+Este arquivo encontra-se na raiz do projeto.
 
 ## Swagger
 Para documentar as *APIs* e facilitar os testes, este projeto está mapeado com o *Swagger*.  
