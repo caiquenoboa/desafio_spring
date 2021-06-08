@@ -4,7 +4,7 @@ import com.meli.desafiospring.gateway.response.UserResponse;
 import com.meli.desafiospring.model.User;
 import com.meli.desafiospring.service.user.UserByIdService;
 import com.meli.desafiospring.util.list.ListUtil;
-import com.meli.desafiospring.util.user.OrderUserResponseUtil;
+import com.meli.desafiospring.util.list.OrderListUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +37,7 @@ public class FollowersService {
         List<UserResponse> followersResponse = listUtil
                                                 .map(u -> new UserResponse( u.getId(), u.getUserName() ), followers);
 
-        OrderUserResponseUtil.order(followersResponse, order);
+        OrderListUtil.order(order, followersResponse, "name");
 
         return new UserResponse(user.getId(), user.getUserName(), followersResponse);
     }

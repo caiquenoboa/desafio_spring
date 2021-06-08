@@ -1,7 +1,6 @@
 package com.meli.desafiospring.gateway.controller.post;
 
 import com.meli.desafiospring.gateway.request.PostPromotionRequest;
-import com.meli.desafiospring.gateway.request.PostRequest;
 import com.meli.desafiospring.gateway.response.PostPromoResponse;
 import com.meli.desafiospring.service.post.promotion.GetQuantityOfProductsPromotionService;
 import com.meli.desafiospring.service.post.promotion.PostPromotionService;

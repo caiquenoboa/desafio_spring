@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserResponse implements Comparable< UserResponse >{
+public class UserResponse  implements Comparable< UserResponse >{
 
     private Integer userId;
     private String userName;

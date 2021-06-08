@@ -4,7 +4,7 @@ import com.meli.desafiospring.gateway.response.UserResponse;
 import com.meli.desafiospring.model.User;
 import com.meli.desafiospring.service.user.UserByIdService;
 import com.meli.desafiospring.util.list.ListUtil;
-import com.meli.desafiospring.util.user.OrderUserResponseUtil;
+import com.meli.desafiospring.util.list.OrderListUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +25,7 @@ public class FollowedService {
 
         List<UserResponse> usersFollowedMounted = listUtil.map(this::mountUserResponseWithFollowed, usersFollowed);
 
-        OrderUserResponseUtil.order(usersFollowedMounted, order);
+        OrderListUtil.order(order, usersFollowedMounted, "name");
 
         return new UserResponse(userId, user.getUserName(), null, null,
                                                                                     usersFollowedMounted, null);

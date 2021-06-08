@@ -1,7 +1,8 @@
 package com.meli.desafiospring.gateway.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 

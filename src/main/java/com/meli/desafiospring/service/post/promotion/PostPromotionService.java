@@ -1,7 +1,6 @@
 package com.meli.desafiospring.service.post.promotion;
 
 import com.meli.desafiospring.gateway.request.PostPromotionRequest;
-import com.meli.desafiospring.gateway.request.PostRequest;
 import com.meli.desafiospring.service.post.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

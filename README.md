@@ -8,8 +8,13 @@ O Projeto foi desenvolvido utilizando java, spring boot e H2 como banco de dados
 Os dados sempre serão salvo [nesse arquivo](https://github.com/caiquenoboa/desafio_spring/blob/paulo/src/main/resources/db/desafio.mv.db).
 
 
+## Para acessar o H2
+    JDBC URL: jdbc:h2:file:./src/main/resources/db/desafio
+    User name: root
+    Password: root
+
 ## Cadastro de usuário
-    POST localhost:8080/
+    POST localhost:8080/users/
 
     {
         "name" : "{Nome do usuário}",

@@ -11,12 +11,12 @@ import com.meli.desafiospring.model.User;
 import com.meli.desafiospring.service.user.UserByIdService;
 import com.meli.desafiospring.service.user.followed.GetAllFollowersService;
 import com.meli.desafiospring.util.list.ListUtil;
+import com.meli.desafiospring.util.list.OrderListUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @AllArgsConstructor
@@ -57,14 +57,10 @@ public class PostService {
 
         posts.forEach(p -> postResponseList.add( PostResponseBuilder.builder(p) ));
 
-        if(order.equals("date_asc")){
-            postResponseList
-                    .sort(Comparator.comparing(PostResponse::getDate)); //TODO Usar generics na classe util do OrderUserResponseUtil ??
-        }else{
-            postResponseList.sort(Comparator.comparing(PostResponse::getDate).reversed());
-        }
+        OrderListUtil.order(order, postResponseList, "date");
 
         return new UserResponse(userId, postResponseList);
     }
+
 
 }
