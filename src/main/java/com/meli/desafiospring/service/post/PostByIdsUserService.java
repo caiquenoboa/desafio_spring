@@ -21,7 +21,7 @@ public class PostByIdsUserService {
         LocalDate dateBefore15Days = LocalDate.now().minusDays(15);
 
         postRepository.findAllByUserIdInAndDateGreaterThan(idsUser, dateBefore15Days)
-                        .ifPresent(posts::addAll);
+                        .ifPresent(p -> posts.addAll(p));
 
         return posts;
 
